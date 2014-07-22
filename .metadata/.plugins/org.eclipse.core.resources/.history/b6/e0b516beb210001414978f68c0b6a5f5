@@ -1,0 +1,12 @@
+package com.sunil.test;
+
+import com.sunil.DAO.EmployeeDAO;
+
+
+public class EmployeeDaoTest {
+	public static void main(String []args) {
+		Employee emp = new Employee(1, "Sunil","SW", 23, "Transbit");
+		EmployeeDAO.storeEmployee(emp);
+		
+	}
+}
