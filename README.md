@@ -1,4 +1,4 @@
 trainingTbitsSunilChandani
 ==========================
 
-training Tbits JDO
+training JDO
