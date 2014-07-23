@@ -11,11 +11,26 @@ import javax.jdo.Transaction;
 
 import com.sunil.Entities.Employee;
 
+/**
+ * 
+ * @author sunil kumar
+ * 	
+ * DAO class for Employee entity
+ */
 public class EmployeeDAO {
 
 
 	private	static PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
 	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * Stores Employee details in the database. Return values indicates that the details are added or not.
+	 * 
+	 * @param emp:Employee
+	 * @return boolean
+	 * 
+	 */
 	public static boolean storeEmployee(Employee emp) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
@@ -42,6 +57,14 @@ public class EmployeeDAO {
 		return transactionStatus;
 	}
 	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * Stores multiple employee details in the database. return values indicates success/failure of this event.
+	 * 
+	 * @param empList:List<Employee>
+	 * @return boolean
+	 */
 	public static boolean storeEmployee(List<Employee> empList) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
@@ -69,6 +92,14 @@ public class EmployeeDAO {
 		return transactionStatus;
 	}
 	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It fetches the Employee details from the database corresponding to empId. if empId doesnot exists in database then it returns null.
+	 * 
+	 * @param empId:Integer
+	 * @return Employee
+	 */
 	public static Employee getEmployee(Integer empId) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Employee employee = null;
@@ -94,6 +125,13 @@ public class EmployeeDAO {
 		return employee;
 	}
 	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It fetches the All the Employee details from the database corresponding to the list of empId's. 
+	 * 
+	 * @return List<Employee>
+	 */
 	public static List<Employee> getEmployee() {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Employee> empList = new ArrayList<Employee>(); ;
@@ -113,6 +151,14 @@ public class EmployeeDAO {
 		return empList;
 	}
 	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It updates the Employee details in the database corresponding to Employee. 
+	 * 
+	 * @param empId:Integer
+	 * @return boolean
+	 */
 	public static boolean updateEmployee(Employee emp) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
@@ -150,6 +196,14 @@ public class EmployeeDAO {
 		return transactionStatus;
 	}
 	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It updates the Multiple Employee details in the database corresponding to list of Employee's. 
+	 * 
+	 * @param empId:Integer
+	 * @return boolean
+	 */
 	public static boolean updateEmployee(List<Employee> empList) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
@@ -188,7 +242,15 @@ public class EmployeeDAO {
 		
 		return transactionStatus;
 	}
-	
+
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It deletes the Employee details from the database corresponding to empId. 
+	 * 
+	 * @param empId:Integer
+	 * @return boolean
+	 */
 	public static boolean deleteEmployee(Integer empId) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
@@ -227,6 +289,14 @@ public class EmployeeDAO {
 		return transactionStatus;
 	}
 	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It deletes the multiple Employee's from the database corresponding to list of empId's. 
+	 * 
+	 * @param empIdList:List<Integer>
+	 * @return boolean
+	 */
 	public static boolean deleteEmployee(List<Integer> empIdList) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
@@ -267,6 +337,13 @@ public class EmployeeDAO {
 		return transactionStatus;
 	}
 
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It deletes all the Employee from the database. 
+	 * 
+	 * @return boolean
+	 */
 	public static boolean  deleteEmployee() {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Employee> empList = new ArrayList<Employee>(); ;
