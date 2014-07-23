@@ -1,23 +1,19 @@
 package com.sunil.test;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import org.codehaus.jackson.map.ObjectMapper;
 
 import com.sunil.DAO.EmployeeDAO;
 import com.sunil.Entities.Employee;
 
 public class EmployeeDaoTest {
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) {
 		
-		System.setIn(new FileInputStream("/home/sunil/WorkspaceTraining/employee/Data/data"));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int choice;
 		String line;
@@ -65,7 +61,6 @@ public class EmployeeDaoTest {
 					break;
 				}
 				case 2: {
-					System.out.println("-saf-as-f-as-fa-");
 					List<Employee> empList = new ArrayList<Employee>();
 					System.out.print("Enter Number of employeed to be added: ");
 					int counter = Integer.parseInt(br.readLine());
@@ -174,6 +169,7 @@ public class EmployeeDaoTest {
 							counter--;
 							idList.add(scanner.nextInt());
 						}
+						scanner.close();
 					}
 					if(EmployeeDAO.deleteEmployee(idList)) {
 						System.out.println("Employees Deleted");

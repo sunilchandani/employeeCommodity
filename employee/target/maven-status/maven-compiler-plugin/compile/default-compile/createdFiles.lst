@@ -1,2 +1,7 @@
 com/sunil/DAO/EmployeeDAO.class
+com/sunil/Client/JerseyClientEmployeePost.class
+com/sunil/Client/JerseyEmployeeClientGet.class
 com/sunil/Entities/Employee.class
+com/sunil/Client/JerseyClientGet.class
+com/sunil/rest/JSONService.class
+com/sunil/rest/HelloWorldService.class

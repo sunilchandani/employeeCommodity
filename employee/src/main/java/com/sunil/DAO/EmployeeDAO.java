@@ -9,7 +9,6 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-
 import com.sunil.Entities.Employee;
 
 public class EmployeeDAO {
@@ -80,7 +79,7 @@ public class EmployeeDAO {
 			query.declareParameters("Integer id");
 			query.setUnique(true);
 			employee = (Employee) query.execute(empId);
-			
+			pm.makeTransient(employee);
 			if(employee == null) {
 				System.out.println("No Employee with empId: " + empId);
 			}
@@ -102,6 +101,7 @@ public class EmployeeDAO {
 		try {
 			Query query = pm.newQuery(Employee.class);
 			empList = (List<Employee>) query.execute();
+			pm.makeTransientAll(empList);
 		} 
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage());
