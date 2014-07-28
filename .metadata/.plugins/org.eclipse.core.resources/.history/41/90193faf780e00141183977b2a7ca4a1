@@ -1,0 +1,230 @@
+package com.sunil.common;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
+import javax.jdo.Transaction;
+
+import com.sunil.common.Employee;
+
+public class EmployeeDAO {
+
+	private static PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+	private static PersistenceManager pm ;
+	private Transaction transaction;
+	boolean transactionStatus;
+	
+	public boolean storeEmployee(Employee emp) {
+		pm = pmf.getPersistenceManager();
+		transaction = pm.currentTransaction();
+		transactionStatus = false ;
+		try {
+			transaction.begin();
+			pm.makePersistent(emp);
+			transaction.commit();
+		} catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} finally {
+			if(transaction.isActive()) {
+				transaction.rollback();
+			} else {
+				pm.close();
+				transactionStatus = true;
+			}
+		}
+		return transactionStatus;
+	}
+	
+	public boolean storeEmployee(List<Employee> empList) {
+		pm = pmf.getPersistenceManager();
+		transaction = pm.currentTransaction();
+		transactionStatus = false ;
+		try {
+			transaction.begin();
+			pm.makePersistentAll(empList);
+			transaction.commit();
+		} catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} finally {
+			if(transaction.isActive()) {
+				transaction.rollback();
+			} else {
+				pm.close();
+				transactionStatus = true;
+			}
+		}
+		return transactionStatus;
+	}
+	
+	public Employee getEmployee(Integer empId) {
+		pm = pmf.getPersistenceManager();
+		Employee employee = null ;
+		Query query = null;
+		try {
+			
+			query = pm.newQuery(Employee.class, "empId == " + empId);
+			employee = (Employee) query.execute();
+			
+			if(employee != null) {
+				System.out.println("No Employee with empId: " + empId);
+			}
+		} catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} finally {
+				query.closeAll();
+				pm.close();
+		}
+		return employee;
+	}
+	
+	public List<Employee> getAllEmployee() {
+		pm = pmf.getPersistenceManager();
+		List<Employee> empList = new ArrayList<Employee>(); ;
+		Query query = null;
+		try {
+			query = pm.newQuery(Employee.class);
+			empList = (List<Employee>) query.execute();
+			
+		} catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} finally {
+				query.closeAll();
+				pm.close();
+		}
+		return empList;
+	}
+	
+	public boolean updateEmployee(Employee emp) {
+		pm = pmf.getPersistenceManager();
+		transaction = pm.currentTransaction();
+		transactionStatus = false;
+		Employee persistentEmp ;
+		Query query ;
+		try {
+			transaction.begin();
+			query  = pm.newQuery(Employee.class, "empId == " + emp.getEmpId());
+			persistentEmp = (Employee) query.execute();
+			
+			persistentEmp.setAddress(emp.getAddress());
+			persistentEmp.setAge(emp.getAge());
+			persistentEmp.setDepartment(emp.getDepartment());
+			persistentEmp.setName(emp.getName());
+
+			transaction.commit();
+		} catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} finally {
+			if(transaction.isActive()) {
+				transaction.rollback();
+			} else {
+				pm.close();
+				transactionStatus = true;
+			}
+		}
+		return transactionStatus;
+	}
+	public boolean updateEmployee(List<Employee> empList) {
+		pm = pmf.getPersistenceManager();
+		transaction = pm.currentTransaction();
+		transactionStatus = false;
+		Employee employee ;
+		Query query ;
+		try {
+			transaction.begin();
+			for(Employee emp : empList) {
+				query  = pm.newQuery(Employee.class, "empId == " + emp.getEmpId());	
+				employee = (Employee) query.execute();
+				
+				employee.setAddress(emp.getAddress());
+				employee.setAge(emp.getAge());
+				employee.setDepartment(emp.getDepartment());
+				employee.setName(emp.getName());
+			}			
+			transaction.commit();
+		} catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} finally {
+			if(transaction.isActive()) {
+				transaction.rollback();
+			} else {
+				pm.close();
+				query.closeAll();
+				transactionStatus = true;
+			}
+		}
+		return transactionStatus;
+	}
+	
+	public boolean deleteEmployee(Integer empId) {
+		pm = pmf.getPersistenceManager();
+		transaction = pm.currentTransaction(); 
+		transactionStatus = false;
+		Employee employee;
+		Query query = null;
+		try {
+			transaction.begin();
+			query = pm.newQuery(Employee.class, "empId == " + empId);
+			employee = (Employee) query.execute();
+			
+			if(employee != null) {
+				System.out.println("No Employee with empId: " + empId);
+			} 
+			else {
+				pm.deletePersistent(employee);
+			}
+			transaction.commit();
+		} catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} finally {
+			if(transaction.isActive()) {
+				transaction.rollback();
+			}
+			else {
+				query.closeAll();
+				pm.close();
+				transactionStatus = true;
+			}
+		}
+		return transactionStatus;
+	}
+	
+	public boolean deleteEmployee(List<Integer> empIdList) {
+		pm = pmf.getPersistenceManager();
+		transaction = pm.currentTransaction(); 
+		transactionStatus = false;
+		Employee employee;
+		Query query = null;
+		try {
+			transaction.begin();
+			for(Integer empId : empIdList) {
+				query = pm.newQuery(Employee.class, "empId == " + empId);
+				employee = (Employee) query.execute();
+				
+				if(employee != null) {
+					System.out.println("No Employee with empId: " + empId);
+				} 
+				else {
+					pm.deletePersistent(employee);
+				}
+			}
+			transaction.commit();
+		} catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} finally {
+			if(transaction.isActive()) {
+				transaction.rollback();
+			}
+			else {
+				query.closeAll();
+				pm.close();
+				transactionStatus = true;
+			}
+		}
+		return transactionStatus;
+	}
+	
+};

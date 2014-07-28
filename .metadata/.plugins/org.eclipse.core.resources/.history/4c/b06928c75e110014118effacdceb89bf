@@ -1,0 +1,42 @@
+package com.sunil.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sunil.DAO.EmployeeDAO;
+import com.sunil.Entities.Employee;
+
+
+public class EmployeeDaoTest {
+	public static void main(String []args) {
+		int choice;
+		char decision;
+		
+		do {
+			System.out.println("Welcome to Menu");
+			System.out.println("1. Store a Employee.");
+			System.out.println("1. Store a Employee.");
+			System.out.println("1. Store a Employee.");
+			System.out.println("1. Store a Employee.");
+			System.out.println("1. Store a Employee.");
+			System.out.println("1. Store a Employee.");
+			System.out.println("1. Store a Employee.");
+		}while(false);
+		
+		Employee emp = new Employee(4, "Bhawna","TA_Updated_3", 24, "TB");
+		List<Employee> empList = new ArrayList<Employee>();
+		empList.add(emp);
+		emp = new Employee(5, "Vinod","RB", 24, "GKV");
+		empList.add(emp);
+		
+		List<Integer> eList = new ArrayList<Integer>();
+		eList.add(4);eList.add(5);
+		//List<Employee> emp = EmployeeDAO.getEmployee();
+		//System.out.println(emp.toString());
+		
+		
+		if(EmployeeDAO.deleteEmployee(eList)) {
+			System.out.println("Deleted");
+		} else System.out.println("Error");
+	}
+}
