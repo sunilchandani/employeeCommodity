@@ -1,0 +1,26 @@
+package com.sunil.rest;
+
+import java.io.File;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+
+public class FileService {
+	private static final String FILE_PATH = "/home/suni/WorkspaceTraining/employee/Data/data";
+ 
+	@GET
+	@Path("/get")
+	@Produces("text/plain")
+	public Response getFile() {
+ 
+		File file = new File(FILE_PATH);
+ 
+		ResponseBuilder response = Response.ok((Object) file);
+		response.header("Content-Disposition",
+			"attachment; filename=\"data_file.txt\"");
+		return response.build();
+	}
+}

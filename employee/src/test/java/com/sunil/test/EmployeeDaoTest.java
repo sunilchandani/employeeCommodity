@@ -150,11 +150,10 @@ public class EmployeeDaoTest {
 				}
 				case 7: {
 					System.out.print("Enter Employee ID for deleting: ");
-					if(EmployeeDAO.deleteEmployee(Integer.parseInt(br.readLine()))) {
-						System.out.println("Employee Deleted");
-					} else {
+					if(EmployeeDAO.deleteEmployee(Integer.parseInt(br.readLine())))
+						System.out.println("Employee Details Deleted.");
+					else 
 						System.out.println("Error occured in deleting Employee.");
-					}
 					break;
 				}
 				case 8: {
@@ -171,19 +170,17 @@ public class EmployeeDaoTest {
 						}
 						scanner.close();
 					}
-					if(EmployeeDAO.deleteEmployee(idList)) {
-						System.out.println("Employees Deleted");
-					} else {
+					if(EmployeeDAO.deleteEmployee(idList))
+						System.out.println("Employee details Deleted.");
+					else 
 						System.out.println("Error occured in deleting Employees.");
-					}
 					break;
 				}
 				case 9: {
-					if(EmployeeDAO.deleteEmployee()) {
-						System.out.println("All Employee Deleted");
-					} else {
-						System.out.println("Error occured in deleting All Employee.");
-					}
+					if(EmployeeDAO.deleteEmployee())
+						System.out.println("All Employee Deleted.");
+					else
+						System.out.println("Error occured in deleting Employee.");
 					break;
 				}
 				case 10: {

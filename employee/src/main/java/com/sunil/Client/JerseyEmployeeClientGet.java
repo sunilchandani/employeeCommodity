@@ -2,8 +2,13 @@ package com.sunil.Client;
 
 import java.util.List;
 
+import javax.ws.rs.core.GenericEntity;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -32,14 +37,14 @@ public class JerseyEmployeeClientGet {
 				throw new RuntimeException("Failed : HTTP error code : "
 				     + response.getStatus());
 			}
-	 
+
 			System.out.println("Output from Server .... \n");
-			String output = response.getEntity(String.class);
-			//Object obj = response.getEntity(Object.class);
-			//List<Employee> output = (List<Employee>)obj;
-			System.out.println(output);
-	 
-		  } catch (Exception e) {
+			List<Employee> genericEntity = (List<Employee>)response.
+					getEntity(new GenericType<List<Employee>>(){} );
+
+			System.out.println(genericEntity);
+
+		} catch (Exception e) {
 	 
 			e.printStackTrace();
 	 

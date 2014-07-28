@@ -254,8 +254,8 @@ public class EmployeeDAO {
 	public static boolean deleteEmployee(Integer empId) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
-		boolean transactionStatus = false ;
-		Employee employee;
+		boolean status = false;
+		Employee employee = null; 
 		
 		try {
 			transaction.begin();
@@ -270,9 +270,9 @@ public class EmployeeDAO {
 			} 
 			else {
 				pm.deletePersistent(employee);
+				transaction.commit();
 			}
-			transaction.commit();
-		} 
+		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage());
 		} 
@@ -281,12 +281,11 @@ public class EmployeeDAO {
 				transaction.rollback();
 			}
 			else {
-				transactionStatus = true;
+				status = true;
 			}
 			pm.close();
 		}
-		
-		return transactionStatus;
+		return status;
 	}
 	
 	/**
@@ -300,8 +299,8 @@ public class EmployeeDAO {
 	public static boolean deleteEmployee(List<Integer> empIdList) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
-		boolean transactionStatus = false ;
-		Employee employee;
+		Employee employee ;
+		boolean status = false;
 		
 		try {
 			transaction.begin();
@@ -329,12 +328,12 @@ public class EmployeeDAO {
 				transaction.rollback();
 			}
 			else {
-				transactionStatus = true;
+				status =true;
 			}
 			pm.close();
 		}
 		
-		return transactionStatus;
+		return status;
 	}
 
 	/**
@@ -346,10 +345,9 @@ public class EmployeeDAO {
 	 */
 	public static boolean  deleteEmployee() {
 		PersistenceManager pm = pmf.getPersistenceManager();
-		List<Employee> empList = new ArrayList<Employee>(); ;
+		List<Employee> empList = new ArrayList<Employee>(); 
 		Transaction transaction = pm.currentTransaction();
-		boolean transactionStatus = false ;
-		
+		boolean status = false ;
 		try {
 			transaction.begin();
 			Query query = pm.newQuery(Employee.class);
@@ -366,11 +364,11 @@ public class EmployeeDAO {
 				transaction.rollback();
 			}
 			else {
-				transactionStatus = true;
+				status = true ;
 			}
-				pm.close();
+			pm.close();
 		}
 		
-		return transactionStatus;
+		return status;
 	}
 }

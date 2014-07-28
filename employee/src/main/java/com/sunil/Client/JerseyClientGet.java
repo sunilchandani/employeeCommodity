@@ -19,8 +19,9 @@ public class JerseyClientGet {
                 JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 		Client client = Client.create(clientConfig);
         
+		int empId = 11;
 		WebResource webResource = client
-		   .resource("http://localhost:8080/employee/rest/json/employee/get");
+		   .resource("http://localhost:8080/employee/rest/json/employee/get"+empId);
  
 		ClientResponse response = webResource.accept("application/json")
                    .get(ClientResponse.class);

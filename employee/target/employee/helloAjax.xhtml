@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body bgcolor="gray">
+	<p:panel header="Employee Management System" > 
+	<h:form>
+	<h:outputLabel for="empId" value="EmployeeID:" style="font-weight:bold" />
+        <p:inputText id="empID" value="#{employeeBean.empId}" >
+        	<p:ajax event="keyup" update="display"> </p:ajax>	
+        </p:inputText>
+        
+    <h:outputLabel for="name" value="Name:" style="font-weight:bold" />
+        <p:inputText id="name" value="#{employeeBean.name}" >
+        	<p:ajax event="keyup" update="display"> </p:ajax>	
+        </p:inputText>
+        
+	<h:outputLabel for="department" value="Department:" style="font-weight:bold" />
+        <p:inputText id="department" value="#{employeeBean.department}" >
+        	<p:ajax event="keyup" update="display"> </p:ajax>	
+        </p:inputText>
+	
+	<h:outputLabel for="age" value="Age:" style="font-weight:bold" />
+        <p:inputText id="age" value="#{employeeBean.age}" >
+        	<p:ajax event="keyup" update="display"> </p:ajax>	
+        </p:inputText>
+
+	<h:outputLabel for="address" value="Address:" style="font-weight:bold" />
+        <p:inputText id="address" value="#{employeeBean.address}" >
+        	<p:ajax event="keyup" update="display"> </p:ajax>	
+        </p:inputText>
+
+	<p:separator />
+
+	<p:commandButton value="Store Employee" update="display" icon="ui-icon-check" actionListener="#{employeeBean.storeEmployee"/>
+	<p:commandButton value="Get Employee" update="display" icon="ui-icon-check" />
+	<p:commandButton value="Store Employee" update="display" icon="ui-icon-check" />
+	<p:commandButton value="Store Employee" update="display" icon="ui-icon-check" />
+	
+	<p:commandButton value="Sample" actionListener="#{employeeBean.sample}" />
+	
+	<p:separator />
+	<h:outputText id="display" value="Employee details [#{employeeBean.empId}, #{employeeBean.name}, #{employeeBean.department},
+	 #{employeeBean.age}, #{employeeBean.address}] added." rendered="false" />
+	</h:form>
+	</p:panel>
+</h:body>
+</html>

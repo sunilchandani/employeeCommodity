@@ -1,0 +1,22 @@
+package com.sunil.test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sunil.DAO.EmployeeDAO;
+import com.sunil.Entities.Employee;
+
+
+public class EmployeeDaoTest {
+	public static void main(String []args) {
+		Employee emp = new Employee(1, "Sunil","SW", 23, "Transbit");
+		List<Employee> empList = new ArrayList<Employee>();
+		empList.add(emp);
+		emp = new Employee(2, "Raghvendra","CS", 24, "tBits");
+		//EmployeeDAO.storeEmployee(emp);
+		if(EmployeeDAO.storeEmployee(emp)) {
+			System.out.println("Added");
+		}
+		
+	}
+}
