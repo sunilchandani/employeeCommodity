@@ -57,7 +57,7 @@ public class JerseyEmployeeClient {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
-			//
+			
 			output = response.getEntity(Employee.class);
 			System.out.println("Output from Server .... \n");
 			System.out.println(output);

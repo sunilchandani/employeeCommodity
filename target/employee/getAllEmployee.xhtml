@@ -17,13 +17,18 @@
 				<p:panelGrid id="grid" columns="1">
 					<p:commandButton value="Fetch All Employee" update="displayList" id="getAll"
 				 action="#{employeeBean.getAllEmployee}" />
-			
+				</p:panelGrid>
+				
+				<p:panelGrid id="grid1" columns="2">
+					<p:commandButton value="Reset" update="panel, displayList" id="reset"
+				action="getAllEmployee" immediate="true" actionListener="#{employeeBean.reset}"
+				styleClass="ui-priority-primary" />
 					<p:commandButton value="Back" update="panel" id="back"
 				action="welcome" actionListener="#{employeeBean.reset}" immediate="true" styleClass="ui-priority-primary" />
 				</p:panelGrid>
 			</p:panel>
 			
-			<p:panel id="displayList"  for="getAll" style="margin-bottom:100px;" dynamic="true" >
+			<p:panel id="displayList"  for="getAll" style="margin-bottom:10px;" dynamic="true" >
 				<p:growl id="growl" showDetail="true" sticky="true" />
 				<p:dataTable value="#{employeeBean.empList}" var="employee" rows="10" paginator="true">
 					<p:column headerText="Employee ID">
