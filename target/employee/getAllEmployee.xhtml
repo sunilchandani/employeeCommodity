@@ -5,9 +5,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-	<head>
+
+	<h:head>
 		<title>Employee Management System</title>
-	</head>
+	</h:head>
 	<h:body>
 		<h3 align="center">Get All Employee</h3>
 		
@@ -15,15 +16,16 @@
 			<p:panel id="panel" style="margin-bottom:10px;">
 				<p:panelGrid id="grid" columns="1">
 					<p:commandButton value="Fetch All Employee" update="displayList" id="getAll"
-				action="#{employeeBean.getAllEmployee()}" />
+				 action="#{employeeBean.getAllEmployee}" />
 			
 					<p:commandButton value="Back" update="panel" id="back"
 				action="welcome" actionListener="#{employeeBean.reset}" immediate="true" styleClass="ui-priority-primary" />
 				</p:panelGrid>
 			</p:panel>
 			
-			<p:panel id="displayList"  style="margin-bottom:10px;">
-				<p:dataTable id="displayTable" value="#{employeeBean.empList}" var="employee">
+			<p:panel id="displayList"  for="getAll" style="margin-bottom:100px;" dynamic="true" >
+				<p:growl id="growl" showDetail="true" sticky="true" />
+				<p:dataTable value="#{employeeBean.empList}" var="employee" rows="10" paginator="true">
 					<p:column headerText="Employee ID">
 						<h:outputText value="#{employee.empId}" />
 					</p:column>
@@ -43,9 +45,9 @@
 					<p:column headerText="Address">
 						<h:outputText value="#{employee.address}" />
 					</p:column>
-					
 				</p:dataTable>
-			</p:panel>			
+			</p:panel>	
+					
 		</h:form>
 	</h:body>
 </html>

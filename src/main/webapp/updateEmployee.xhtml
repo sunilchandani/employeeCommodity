@@ -5,40 +5,35 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-	<head>
+	<h:head>
 		<title>Employee Management System</title>
-	</head>
+	</h:head>
 	<body>
 		<h3 align="center">Update Employee</h3>
 		
 		<h:form>
 			<p:panel id="panel" header="Update Employee" style="margin-bottom:10px;">
-			<p:panelGrid id="grid" columns="1">
+			<p:panelGrid id="grid" columns="2">
 			
 				<h:outputLabel  value="Employee ID: *" />
 				<p:inputText id="empId" value="#{employeeBean.empId}" required="true" label="empId" />
-				<p:message for="empId" />
 
 				<h:outputLabel  value="Employee Name: *" />
 				<p:inputText id="name" value="#{employeeBean.name}" required="true" label="name"/>
-				<p:message for="name" />
 				
 				<h:outputLabel  value="Department: " />
 				<p:inputText id="department" value="#{employeeBean.department}" label="department"/>
-				<p:message for="department" />
 				
 				<h:outputLabel  value="Age: " />
 				<p:inputText id="age" value="#{employeeBean.age}" label="age"/>
-				<p:message for="age" />
 				
 				<h:outputLabel  value="Address: " />
 				<p:inputText id="address" value="#{employeeBean.address}" label="address"/>
-				<p:message for="address" />
 			
 			</p:panelGrid>
 			
 			<p:commandButton value="Update" update="panel, updateInfo" id="update"
-				action="#{employeeBean.updateEmployee()}" process="@form"
+				action="#{employeeBean.updateEmployee}" process="@form"
 				styleClass="ui-priority-primary" />
 
             <p:commandButton value="Reset" update="panel" id="reset"

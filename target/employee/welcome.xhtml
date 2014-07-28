@@ -13,16 +13,33 @@
 	<h:form>
 		<p:accordionPanel>
 			<p:tab title="Welcome To Employee Management System">
-
-				<h:panelGrid columns="1" cellpadding="10">
-
-					<h:commandButton value="Store Employee" action="storeEmployee" actionListener="#{employeeBean.reset}" />
-					<h:commandButton value="Get Employee" action="getEmployee" actionListener="#{employeeBean.reset}"/>
-					<h:commandButton value="Get All Employee" action="getAllEmployee" actionListener="#{employeeBean.reset}" />
-					<h:commandButton value="Update Employee" action="updateEmployee" actionListener="#{employeeBean.reset}" />
-					<h:commandButton value="Delete Employee" action="deleteEmployee" actionListener="#{employeeBean.reset}" />
-
-				</h:panelGrid>
+				<p:accordionPanel>
+					<p:tab title="Store">
+						<h:panelGrid columns="1" cellpadding="10">
+						<h:commandButton value="Store Employee" action="storeEmployee" actionListener="#{employeeBean.reset}" />
+						</h:panelGrid>	
+					</p:tab>
+					
+					<p:tab title="Get">
+						<h:panelGrid columns="1" cellpadding="10">
+						<h:commandButton value="Get Employee" action="getEmployee" actionListener="#{employeeBean.reset}"/>
+						<h:commandButton value="Get All Employee" action="getAllEmployee" actionListener="#{employeeBean.reset}" />
+						</h:panelGrid>	
+					</p:tab>
+	
+					<p:tab title="Update">
+						<h:panelGrid columns="1" cellpadding="10">
+						<h:commandButton value="Update Employee" action="updateEmployee" actionListener="#{employeeBean.reset}" />
+						</h:panelGrid>	
+					</p:tab>
+					
+					<p:tab title="Delete">
+						<h:panelGrid columns="1" cellpadding="10">
+						<h:commandButton value="Delete Employee" action="deleteEmployee" actionListener="#{employeeBean.reset}" />
+						</h:panelGrid>	
+					</p:tab>
+					
+				</p:accordionPanel>
 			</p:tab>
 		</p:accordionPanel>
 	</h:form>

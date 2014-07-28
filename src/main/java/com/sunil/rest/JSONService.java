@@ -111,7 +111,7 @@ public class JSONService {
 		if (status)
 			return Response.status(201).entity("Employee details Deleted\n").build();
 		else
-			return Response.status(201).entity("Error in Deletion.\n").build();
+			return Response.status(200).entity("No Employee with Employee ID:"+id+"\n").build();
 	}
 
 	@POST

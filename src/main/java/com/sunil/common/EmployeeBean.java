@@ -127,8 +127,14 @@ public class EmployeeBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Error in fetching details.", null));
+							"Employee doesnot Exists.", null));
 			return;
+		}
+		else {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Success", null));
 		}
 		this.empId=emp.getEmpId();
 		this.name=emp.getName();
@@ -136,7 +142,7 @@ public class EmployeeBean {
 		this.age=emp.getAge();
 		this.address=emp.getAddress();
 	}
-	
+
 	public void getAllEmployee() {
 		this.setEmpList((new JerseyEmployeeClient()).getEmployee());
 	}
@@ -144,7 +150,7 @@ public class EmployeeBean {
 	public void updateEmployee() {
 		Employee emp = new Employee(this.empId, this.name, this.department,
 				this.age, this.address);
-		if((new JerseyEmployeeClient()).updateEmployee(emp) != null) {
+		if((new JerseyEmployeeClient()).updateEmployee(emp)) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,

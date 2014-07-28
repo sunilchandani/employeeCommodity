@@ -98,8 +98,7 @@ public class JerseyEmployeeClient {
 		return empList;
 	}
 	
-	public Employee updateEmployee(Employee emp) {
-		Employee employee = null;
+	public boolean updateEmployee(Employee emp) {
 		try {
 			ClientConfig clientConfig = new DefaultClientConfig();
 			clientConfig.getFeatures().put(
@@ -119,13 +118,13 @@ public class JerseyEmployeeClient {
 			}
 
 			System.out.println("Output from Server .... \n");
-			employee = response.getEntity(Employee.class);
-			System.out.println(employee);
+			String output = response.getEntity(String.class);
+			System.out.println(output);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return false;
 		}
-		return employee;
+		return true;
 	}
 
 	public boolean deleteEmployee(Integer empId) {

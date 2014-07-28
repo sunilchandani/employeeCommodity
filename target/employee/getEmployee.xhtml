@@ -5,10 +5,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-	<head>
+	<h:head>
 		<title>Employee Management System</title>
-	</head>
-	<body>
+	</h:head>
+	<h:body>
 		<h3 align="center">Get Employee</h3>
 		
 		<h:form>
@@ -21,8 +21,8 @@
 			
 			</p:panelGrid>
 			
-			<p:commandButton value="Get Employee" update="panel, displayInfo" id="get"
-				action="#{employeeBean.getEmployee()}" process="@form"
+			<p:commandButton value="Get Employee" id="get" update="panel, displayInfo"
+				action="#{employeeBean.getEmployee}" process="@form" 
 				styleClass="ui-priority-primary" />
 
             <p:commandButton value="Reset" update="panel" id="reset"
@@ -34,25 +34,26 @@
 				styleClass="ui-priority-primary" />
 			</p:panel>
 			
-			<p:dialog id="displayInfo" header="Employee Information" height="50" >
-			<h:panelGrid>
-				<h:outputText value="Employee ID: " />
-				<h:outputText value="#{employeeBean.empId}" />
+			<p:panel id="displayInfo"  for="get" style="margin-bottom:50px;" dynamic="true" >
+				<p:growl id="growl" showDetail="true" sticky="true" />
+					<h:panelGrid columns="2">
+					<h:outputText value="Employee ID: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.empId}" />
+	
+					<h:outputText value="Employee Name: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.name}" />
 
-				<h:outputText value="Employee Name: " />
-				<h:outputText value="#{employeeBean.name}" />
-
-				<h:outputText value="Department: " />
-				<h:outputText value="#{employeeBean.department}" />
+					<h:outputText value="Department: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.department}" />
                 
-                <h:outputText value="Age: " />
-				<h:outputText value="#{employeeBean.age}" />
+            	    <h:outputText value="Age: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.age}" />
 				
-				<h:outputText value="Address: " />
-				<h:outputText value="#{employeeBean.address}" />
+					<h:outputText value="Address: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.address}" />
 
-			</h:panelGrid>
-			</p:dialog>			
+					</h:panelGrid>
+			</p:panel>			
 		</h:form>
-	</body>
+	</h:body>
 </html>

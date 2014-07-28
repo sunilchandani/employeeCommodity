@@ -5,40 +5,35 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-	<head>
+	<h:head>
 		<title>Employee Management System</title>
-	</head>
+	</h:head>
 	<body>
 		<h3 align="center">Store Employee</h3>
 		
 		<h:form>
 			<p:panel id="panel" header="Store Employee" style="margin-bottom:10px;">
-			<p:panelGrid id="grid" columns="1">
-			
+			<p:panelGrid id="grid" columns="2">
+				
 				<h:outputLabel  value="Employee ID: *" />
 				<p:inputText id="empId" value="#{employeeBean.empId}" required="true" label="empId" />
-				<p:message for="empId" />
 
 				<h:outputLabel  value="Employee Name: *" />
 				<p:inputText id="name" value="#{employeeBean.name}" required="true" label="name"/>
-				<p:message for="name" />
 				
 				<h:outputLabel  value="Department: " />
 				<p:inputText id="department" value="#{employeeBean.department}" label="department"/>
-				<p:message for="department" />
 				
 				<h:outputLabel  value="Age: " />
 				<p:inputText id="age" value="#{employeeBean.age}" label="age"/>
-				<p:message for="age" />
 				
 				<h:outputLabel  value="Address: " />
 				<p:inputText id="address" value="#{employeeBean.address}" label="address"/>
-				<p:message for="address" />
 			
 			</p:panelGrid>
 			
-			<p:commandButton value="Store" update="panel, display" id="store"
-				action="#{employeeBean.storeEmployee()}" process="@form"
+			<p:commandButton value="Store" update="panel, displayInfo" id="store"
+				action="#{employeeBean.storeEmployee}" process="@form"
 				styleClass="ui-priority-primary" />
 
             <p:commandButton value="Reset" update="panel" id="reset"
@@ -50,26 +45,25 @@
 				styleClass="ui-priority-primary" />
 			</p:panel>
 			
-			
-			<p:panel id="display" header="Employee Information" style="margin-top:40px;">
-			<h:panelGrid id="grid1" columns="2">
+			<p:panel id="displayInfo"  for="store" style="margin-bottom:50px;" dynamic="true" >
+				<p:growl id="growl" showDetail="true" sticky="true" />
+					<h:panelGrid columns="2">
+					<h:outputText value="Employee ID: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.empId}" />
+	
+					<h:outputText value="Employee Name: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.name}" />
 
-				<h:outputText value="Employee ID: " />
-				<h:outputText value="#{employeeBean.empId}" />
-
-				<h:outputText value="Employee Name: " />
-				<h:outputText value="#{employeeBean.name}" />
-
-				<h:outputText value="Department: " />
-				<h:outputText value="#{employeeBean.department}" />
+					<h:outputText value="Department: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.department}" />
                 
-                <h:outputText value="Age: " />
-				<h:outputText value="#{employeeBean.age}" />
+            	    <h:outputText value="Age: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.age}" />
 				
-				<h:outputText value="Address: " />
-				<h:outputText value="#{employeeBean.address}" />
+					<h:outputText value="Address: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.address}" />
 
-			</h:panelGrid>
+					</h:panelGrid>
 			</p:panel>
 			
 		</h:form>
