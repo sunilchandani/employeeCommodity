@@ -27,15 +27,6 @@ public class JSONService {
 
 	}
 
-	@POST
-	@Path("/post")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces("text/plain")
-	public Response getEmployeeInJSONPost(Employee employee) {
-		return Response.status(201).entity(EmployeeDAO.storeEmployee(employee))
-				.build();
-	}
-
 	@GET
 	@Path("/getEmp")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -55,11 +46,14 @@ public class JSONService {
 	}
 
 	@POST
-	@Path("/postEmp")
+	@Path("/post")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response postEmployee(Employee employee) {
-		EmployeeDAO.storeEmployee(employee);
-		return Response.status(201).entity("Employee Details added.").build();
+		boolean b = EmployeeDAO.storeEmployee(employee);
+		if (b) return Response.status(201).entity("Employee Details added.")
+					.build();
+		else return Response.status(202).entity("Employee Already Exists.")
+				.build();
 	}
 
 	@POST
@@ -72,7 +66,7 @@ public class JSONService {
 					.build();
 		else
 			return Response
-					.status(201)
+					.status(202)
 					.entity("Invalid Employee Details/Employee ID already exists.")
 					.build();
 	}
@@ -87,7 +81,10 @@ public class JSONService {
 			return Response.status(201)
 					.entity("Updated:\n" + employee.toString()).build();
 		else
-			return Response.status(201).entity("Error in Updation").build();
+			return Response
+					.status(202)
+					.entity("Error in Updation: No Employee with ID="
+							+ employee.getEmpId() + " exist.").build();
 	}
 
 	@POST
@@ -100,7 +97,7 @@ public class JSONService {
 			return Response.status(201)
 					.entity("Updated:\n" + empList.toString()).build();
 		else
-			return Response.status(201).entity("Error in Updation").build();
+			return Response.status(202).entity("Error in Updation").build();
 	}
 
 	@POST
@@ -109,9 +106,12 @@ public class JSONService {
 	public Response deleteEmployee(@PathParam("param") String id) {
 		boolean status = EmployeeDAO.deleteEmployee(Integer.parseInt(id));
 		if (status)
-			return Response.status(201).entity("Employee details Deleted\n").build();
+			return Response.status(201).entity("Employee details Deleted\n")
+					.build();
 		else
-			return Response.status(200).entity("No Employee with Employee ID:"+id+"\n").build();
+			return Response.status(202)
+					.entity("No Employee with Employee ID:" + id + "\n")
+					.build();
 	}
 
 	@POST
@@ -119,10 +119,11 @@ public class JSONService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteEmployee() {
 		boolean status = EmployeeDAO.deleteEmployee();
-		if(status)
-			return Response.status(201).entity("All employee details deleted:\n").build();
+		if (status)
+			return Response.status(201)
+					.entity("All employee details deleted:\n").build();
 		else
-			return Response.status(201).entity("Error in Deletion.\n").build();
+			return Response.status(202).entity("Error in Deletion.\n").build();
 	}
 
 }

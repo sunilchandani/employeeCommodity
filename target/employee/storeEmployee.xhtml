@@ -32,7 +32,8 @@
 			
 			</p:panelGrid>
 			
-			<p:commandButton value="Store" update="panel, displayInfo" id="store"
+			<p:growl id="growl" showDetail="true" life="5000" />
+			<p:commandButton value="Store" update="panel, growl" id="store"
 				action="#{employeeBean.storeEmployee}" process="@form"
 				styleClass="ui-priority-primary" />
 
@@ -44,28 +45,7 @@
 				action="welcome" immediate="true" actionListener="#{employeeBean.reset}"
 				styleClass="ui-priority-primary" />
 			</p:panel>
-			
-			<p:panel id="displayInfo"  for="store" style="margin-bottom:50px;" dynamic="true" >
-				<p:growl id="growl" showDetail="true" sticky="true" />
-					<h:panelGrid columns="2">
-					<h:outputText value="Employee ID: " style="font-weight:bold" />
-					<h:outputText value="#{employeeBean.empId}" />
-	
-					<h:outputText value="Employee Name: " style="font-weight:bold" />
-					<h:outputText value="#{employeeBean.name}" />
-
-					<h:outputText value="Department: " style="font-weight:bold" />
-					<h:outputText value="#{employeeBean.department}" />
-                
-            	    <h:outputText value="Age: " style="font-weight:bold" />
-					<h:outputText value="#{employeeBean.age}" />
-				
-					<h:outputText value="Address: " style="font-weight:bold" />
-					<h:outputText value="#{employeeBean.address}" />
-
-					</h:panelGrid>
-			</p:panel>
-			
+						
 		</h:form>
 	</body>
 </html>

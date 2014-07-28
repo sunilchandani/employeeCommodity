@@ -40,9 +40,12 @@ public class EmployeeDAO {
 			transaction.begin();
 			pm.makePersistent(emp);
 			transaction.commit();
-		} 
+		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage());
+			transaction.rollback();
+			pm.close();
+			return transactionStatus;
 		} 
 		finally {
 			if(transaction.isActive()) {
