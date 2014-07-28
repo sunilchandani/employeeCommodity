@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="org.slf4j.Logger"/>
+<fullyQualifiedTypeName name="org.slf4j.LoggerFactory"/>
+<fullyQualifiedTypeName name="org.datanucleus.store.rdbms.query.ForwardQueryResult"/>
+<fullyQualifiedTypeName name="com.sunil.DAO.EmployeeDAO"/>
+<fullyQualifiedTypeName name="com.sunil.Entities.Employee"/>
+</qualifiedTypeNameHistroy>

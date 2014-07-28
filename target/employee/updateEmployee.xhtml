@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<title>Employee Management System</title>
+	</h:head>
+	<body>
+		<h3 align="center">Update Employee</h3>
+		
+		<h:form>
+			<p:panel id="panel" header="Update Employee" style="margin-bottom:10px;">
+			<p:panelGrid id="grid" columns="3">
+			
+				<h:outputLabel  value="Employee ID: *" />
+				<p:inputText id="empId" value="#{employeeBean.empId}" required="true" label="empId" />
+				<p:message for="empId" />
+
+				<h:outputLabel  value="Employee Name: *" />
+				<p:inputText id="name" value="#{employeeBean.name}" required="true" label="name"/>
+				<p:message for="name" />
+				
+				<h:outputLabel  value="Department: " />
+				<p:inputText id="department" value="#{employeeBean.department}" label="department"/>
+				<p:message for="department" />
+				
+				<h:outputLabel  value="Age: " />
+				<p:inputText id="age" value="#{employeeBean.age}" label="age"/>
+				<p:message for="age" />
+				
+				<h:outputLabel  value="Address: " />
+				<p:inputText id="address" value="#{employeeBean.address}" label="address"/>
+				<p:message for="address" />
+			
+			</p:panelGrid>
+			
+			<p:commandButton value="Update" update="panel, updateInfo" id="update"
+				action="#{employeeBean.updateEmployee}" process="@form"
+				styleClass="ui-priority-primary" />
+
+            <p:commandButton value="Reset" update="panel" id="reset"
+				action="updateEmployee" immediate="true"  actionListener="#{employeeBean.reset}"
+				styleClass="ui-priority-primary" />
+
+            <p:commandButton value="Back" update="panel" id="back"
+				action="welcome" immediate="true" actionListener="#{employeeBean.reset}"
+				styleClass="ui-priority-primary" />
+			</p:panel>
+			
+			
+			<p:dialog id="updateInfo" header="Employee Information" height="50">
+			<h:panelGrid>
+				<h:outputText value="Employee ID: " />
+				<h:outputText value="#{employeeBean.empId}" />
+
+				<h:outputText value="Employee Name: " />
+				<h:outputText value="#{employeeBean.name}" />
+
+				<h:outputText value="Department: " />
+				<h:outputText value="#{employeeBean.department}" />
+                
+                <h:outputText value="Age: " />
+				<h:outputText value="#{employeeBean.age}" />
+				
+				<h:outputText value="Address: " />
+				<h:outputText value="#{employeeBean.address}" />
+
+			</h:panelGrid>
+			</p:dialog>			
+			
+		</h:form>
+	</body>
+</html>

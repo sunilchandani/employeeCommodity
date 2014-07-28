@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<title>Employee Management System</title>
+	</h:head>
+	<body>
+		<h3 align="center">Store Employee</h3>
+		
+		<h:form>
+			<p:panel id="panel" header="Store Employee" style="margin-bottom:10px;">
+			<p:panelGrid id="grid" columns="2">
+				
+				<h:outputLabel  value="Employee ID: *" />
+				<p:inputText id="empId" value="#{employeeBean.empId}" required="true" label="empId" />
+
+				<h:outputLabel  value="Employee Name: *" />
+				<p:inputText id="name" value="#{employeeBean.name}" required="true" label="name"/>
+				
+				<h:outputLabel  value="Department: " />
+				<p:inputText id="department" value="#{employeeBean.department}" label="department"/>
+				
+				<h:outputLabel  value="Age: " />
+				<p:inputText id="age" value="#{employeeBean.age}" label="age"/>
+				
+				<h:outputLabel  value="Address: " />
+				<p:inputText id="address" value="#{employeeBean.address}" label="address"/>
+			
+			</p:panelGrid>
+			
+			<p:commandButton value="Store" update="panel" id="store"
+				action="#{employeeBean.storeEmployee}" process="@form"
+				styleClass="ui-priority-primary" />
+
+            <p:commandButton value="Reset" update="panel" id="reset"
+				action="storeEmployee" immediate="true" actionListener="#{employeeBean.reset}"
+				styleClass="ui-priority-primary" />
+
+            <p:commandButton value="Back" update="panel" id="back"
+				action="welcome" immediate="true" actionListener="#{employeeBean.reset}"
+				styleClass="ui-priority-primary" />
+			</p:panel>
+			
+			<p:panel id="displayInfo"  for="store" style="margin-bottom:50px;" dynamic="true" >
+				<p:growl id="growl" showDetail="true" sticky="true" />
+					<h:panelGrid columns="2">
+					<h:outputText value="Employee ID: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.empId}" />
+	
+					<h:outputText value="Employee Name: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.name}" />
+
+					<h:outputText value="Department: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.department}" />
+                
+            	    <h:outputText value="Age: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.age}" />
+				
+					<h:outputText value="Address: " style="font-weight:bold" />
+					<h:outputText value="#{employeeBean.address}" />
+
+					</h:panelGrid>
+			</p:panel>
+			
+		</h:form>
+	</body>
+</html>

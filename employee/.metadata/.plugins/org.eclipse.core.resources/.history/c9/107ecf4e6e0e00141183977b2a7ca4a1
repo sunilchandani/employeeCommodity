@@ -1,0 +1,11 @@
+package com.sunil.common;
+
+import javax.jdo.annotations.PersistenceCapable;
+
+@PersistenceCapable(table="Employee", detachable="true")
+public class Employee {
+	
+	@Persitent
+	private int empId;
+	
+}
