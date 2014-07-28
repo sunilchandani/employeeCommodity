@@ -1,0 +1,31 @@
+package com.sunil.common;
+
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+
+@PersistenceCapable(table="Employee", detachable="true")
+public class Employee {
+	
+	@Column(name="empId")
+	@Persistent(primaryKey="true")
+	private int empId;
+	
+	@Column(name="name")
+	@Persistent
+	private String name;
+	
+	@Column(name="department")
+	@Persistent
+	private String department;
+	
+	@Column(name="age")
+	@Persistent
+	private int age;
+	
+	@Column(name="address")
+	@Persistent
+	private String address;
+	
+}

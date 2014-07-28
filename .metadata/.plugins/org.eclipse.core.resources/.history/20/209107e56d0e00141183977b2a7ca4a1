@@ -1,0 +1,8 @@
+package com.sunil.common;
+
+import javax.jdo.annotations.PersistenceCapable;
+public class Employee {
+
+	@PersistenceCapable
+	
+}
