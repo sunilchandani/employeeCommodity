@@ -17,15 +17,14 @@
 			
 				<p:outputLabel  value="Employee ID: *" />
 				<p:inputText id="empId" value="#{employeeBean.empId}" required="true" label="empId" />
-				<p:message for="empId" />
 			
 			</p:panelGrid>
-			
-			<p:commandButton value="Get Employee" id="get" update="panel, displayInfo"
-				action="#{employeeBean.getEmployee}" process="@form" 
+			<p:growl id="growl" showDetail="true" life="5000" />
+			<p:commandButton value="Get Employee" id="get" update="panel, displayInfo, growl"
+				action="#{employeeBean.getEmployee}" process="@form"
 				styleClass="ui-priority-primary" />
 
-            <p:commandButton value="Reset" update="panel" id="reset"
+            <p:commandButton value="Reset" update="panel, displayInfo" id="reset"
 				action="getEmployee" immediate="true" actionListener="#{employeeBean.reset}"
 				styleClass="ui-priority-primary" />
 
@@ -35,7 +34,7 @@
 			</p:panel>
 			
 			<p:panel id="displayInfo"  for="get" style="margin-bottom:50px;" dynamic="true" >
-				<p:growl id="growl" showDetail="true" sticky="true" />
+				
 					<h:panelGrid columns="2">
 					<h:outputText value="Employee ID: " style="font-weight:bold" />
 					<h:outputText value="#{employeeBean.empId}" />

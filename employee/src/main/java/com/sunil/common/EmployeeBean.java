@@ -96,13 +96,6 @@ public class EmployeeBean {
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
-	public void sample() {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", this
-						.toString()));
-	}
-
 	public void storeEmployee() {
 		Employee emp = new Employee(this.empId, this.name, this.department,
 				this.age, this.address);
@@ -111,13 +104,13 @@ public class EmployeeBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Successfully Added Employee Details", null));
+							"Success", "Added Employee Details"));
 		}
 		else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Error/Employee with ID="+ this.empId + " already exists.", null));
+							"Error", "Employee with ID="+ this.empId + " already exists."));
 		}
 	}
 	
@@ -127,7 +120,7 @@ public class EmployeeBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Employee doesnot Exists.", null));
+							"Error","Employee doesnot Exists."));
 			return;
 		}
 		else {
@@ -144,7 +137,21 @@ public class EmployeeBean {
 	}
 
 	public void getAllEmployee() {
-		this.setEmpList((new JerseyEmployeeClient()).getEmployee());
+		List<Employee> eList = (new JerseyEmployeeClient()).getEmployee();
+		this.setEmpList(eList);
+		if(eList != null) {
+			FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"Success", ""));
+				return;
+		}
+		else {
+				FacesContext.getCurrentInstance().addMessage(
+					null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Error","Error in fetching details."));
+				return;
+			}
 	}
 	
 	public void updateEmployee() {
@@ -153,15 +160,15 @@ public class EmployeeBean {
 		if((new JerseyEmployeeClient()).updateEmployee(emp)) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Successfully Updated Employee Details.", null));
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Success", "Updated Employee Details."));
 			return;
 		}
 		else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Error in updating employee details.", null));
+							"Error","Employee doesnot Exists."));
 			return;
 		}
 	}
@@ -171,13 +178,13 @@ public class EmployeeBean {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Successfully deleted Employee Details", null));
+							"Success", "Deleted Employee Details"));
 		}
 		else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Error occured in deleting details or Employee with ID=" + this.empId+" doesnot exits.", null));
+							"Error", "Employee with ID=" + this.empId+" doesnot exits."));
 		}
 
 	}
