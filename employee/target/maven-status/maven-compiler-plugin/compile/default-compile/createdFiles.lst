@@ -5,6 +5,7 @@ com/sunil/Client/JerseyUpdateMultipleClient$1.class
 com/sunil/common/HelloBean.class
 com/sunil/Client/JerseyEmployeeClientGet$1.class
 com/sunil/Client/JerseyUpdateClientPost.class
+com/sunil/Client/JerseyEmployeeClient$2.class
 com/sunil/Client/JerseyClientGet.class
 com/sunil/Client/JerseyEmployeeClient.class
 com/sunil/Client/JerseyDeleteClient.class

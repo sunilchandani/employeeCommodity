@@ -189,4 +189,26 @@ public class EmployeeBean {
 
 	}
 	
+	public void searchEmployee() {
+		Employee emp = new Employee((this.empId==null?0:this.empId), this.name, this.department,
+				(this.age==null?0:this.age), this.address);
+		this.empList = (new JerseyEmployeeClient()).searchEmployee(emp);
+		if(this.empList == null ) {
+			FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				"Error", "Search Error. please try again."));
+		}
+		else if( this.empList.isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+				"", "No Results."));
+		} 
+		else {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+					"Success",null));
+		}
+		
+	}
+	
 }

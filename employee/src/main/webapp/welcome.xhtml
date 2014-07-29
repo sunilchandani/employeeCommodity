@@ -39,6 +39,11 @@
 						</h:panelGrid>	
 					</p:tab>
 					
+					<p:tab title="Search">
+						<h:panelGrid columns="1" cellpadding="10">
+						<h:commandButton value="Search Options" action="searchOptions" actionListener="#{employeeBean.reset}" />
+						</h:panelGrid>	
+					</p:tab>
 				</p:accordionPanel>
 			</p:tab>
 		</p:accordionPanel>

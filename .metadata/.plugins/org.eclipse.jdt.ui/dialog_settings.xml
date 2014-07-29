@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item value="/home/sunil/glassfish3/glassfish/domains/domain1/applications/employee/WEB-INF/lib/jsf-api-2.2.2.jar" key="org.eclipse.jdt.ui.lastuserlibrary"/>
-	<item value="filter_imports;" key="filters_last_used"/>
 	<item value="560,578" key="UserLibraryLoadSaveDialog.size"/>
+	<item value="filter_imports;" key="filters_last_used"/>
 	<section name="DialogBounds_OverrideMethodDialog">
 		<item value="540" key="DIALOG_WIDTH"/>
 		<item value="40" key="DIALOG_Y_ORIGIN"/>
-		<item value="431" key="DIALOG_X_ORIGIN"/>
 		<item value="520" key="DIALOG_HEIGHT"/>
+		<item value="431" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="OptionalMessageDialog.hide.">
@@ -19,15 +19,15 @@
 	<section name="org.eclipse.jdt.internal.ui.wizards.buildpaths.NewVariableEntryDialog">
 		<item value="648" key="DIALOG_WIDTH"/>
 		<item value="85" key="DIALOG_Y_ORIGIN"/>
-		<item value="430" key="DIALOG_HEIGHT"/>
 		<item value="117" key="DIALOG_X_ORIGIN"/>
+		<item value="430" key="DIALOG_HEIGHT"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="DialogBounds_GenerateToStringDialog">
 		<item value="576" key="DIALOG_WIDTH"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
-		<item value="363" key="DIALOG_X_ORIGIN"/>
 		<item value="744" key="DIALOG_HEIGHT"/>
+		<item value="363" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="BuildPathsPropertyPage">
@@ -41,35 +41,35 @@
 	<section name="SourceActionDialog.methods">
 		<item value="false" key="SkipNull"/>
 		<item value="10" key="LimitValue"/>
-		<item value="false" key="Comments"/>
-		<item value="1" key="VisibilityModifier"/>
-		<item value="0" key="StringStyle"/>
 		<item value="0" key="ToStringTemplateSelected"/>
-		<item value="2" key="InsertPosition.v2"/>
+		<item value="0" key="StringStyle"/>
+		<item value="1" key="VisibilityModifier"/>
+		<item value="false" key="Comments"/>
 		<item value="false" key="LimitElements"/>
+		<item value="2" key="InsertPosition.v2"/>
 		<item value="false" key="SynchronizedModifier"/>
-		<item value="false" key="FinalModifier"/>
 		<item value="true" key="IgnoreDefault"/>
+		<item value="false" key="FinalModifier"/>
 	</section>
 	<section name="NewPackageWizardPage">
 		<item value="false" key="create_package_info_java"/>
 	</section>
 	<section name="completion_proposal_size">
 	</section>
+	<section name="JavaElementSearchActions">
+	</section>
 	<section name="DialogBounds_AddDelegateMethodsDialog">
 		<item value="668" key="DIALOG_WIDTH"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
-		<item value="317" key="DIALOG_X_ORIGIN"/>
 		<item value="615" key="DIALOG_HEIGHT"/>
+		<item value="317" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
-	</section>
-	<section name="JavaElementSearchActions">
 	</section>
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
 		<item value="649" key="DIALOG_WIDTH"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
-		<item value="327" key="DIALOG_X_ORIGIN"/>
 		<item value="744" key="DIALOG_HEIGHT"/>
+		<item value="327" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="NewClassWizardPage">

@@ -1,5 +1,6 @@
 package com.sunil.Client;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,5 +156,74 @@ public class JerseyEmployeeClient {
 			return false;
 		}
 		return true;
+	}
+
+	public List<Employee> searchEmployee(Employee emp) {
+		List<Employee> output = null;
+		try {
+			ClientConfig clientConfig = new DefaultClientConfig();
+			clientConfig.getFeatures().put(
+					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+
+			Client client = Client.create(clientConfig);
+
+			boolean flag = false;
+			String uri="";
+			if(emp.getEmpId() != 0){
+				if(!flag) uri = uri.concat("?");
+				else uri = uri.concat("&");
+				uri = uri.concat("empId=" + emp.getEmpId());
+				flag = true;
+			}
+			if(emp.getName() != null && !emp.getName().isEmpty()) {
+				if(!flag) uri = uri.concat("?");
+				else uri = uri.concat("&");
+				uri = uri.concat("name=" + URLEncoder.encode(emp.getName(), "UTF-8"));
+				flag = true;
+			}
+			if(emp.getDepartment() != null && !emp.getDepartment().isEmpty()) {
+				if(!flag) uri = uri.concat("?");
+				else uri = uri.concat("&");
+				uri = uri.concat("department=" + URLEncoder.encode(emp.getDepartment(), "UTF-8"));
+				flag = true;
+			}
+			if(emp.getAge() != 0){ 
+				if(!flag) uri = uri.concat("?");
+				else uri = uri.concat("&");
+				uri = uri.concat("age=" + emp.getAge());
+				flag = true;
+			}
+			
+			if(emp.getAddress() != null && !emp.getAddress().isEmpty()) { 
+				if(!flag) uri = uri.concat("?");
+				else uri = uri.concat("&");
+				uri = uri.concat("address=" + URLEncoder.encode(emp.getAddress(), "UTF-8"));
+				flag = true;
+			}
+			
+			System.out.println("Employee: " + emp);
+			uri = "http://localhost:8080/employee/rest/json/employee/search"+uri;
+			System.out.println("URI: " + uri);
+			uri.replaceAll(" ", "%20");
+			System.out.println("URI: " + uri);
+			WebResource webResource = client.resource(uri);
+			ClientResponse response = webResource.type("application/json").get(ClientResponse.class);
+			
+
+			if (response.getStatus() != 201 && response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			System.out.println("Output from Server .... \n");
+			if(response.getStatus() == 200) System.out.println("Search results in 0 employees.");
+			else output = (List<Employee>) response.getEntity(new GenericType<List<Employee>>(){});
+			if(output != null) System.out.println(output);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return output;
 	}
 }

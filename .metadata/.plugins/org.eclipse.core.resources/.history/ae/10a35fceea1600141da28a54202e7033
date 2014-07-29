@@ -1,0 +1,220 @@
+package com.sunil.Client;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
+import com.sunil.Entities.Employee;
+
+public class JerseyEmployeeClient {
+	public boolean postEmployee(Employee emp) {
+		try {
+			ClientConfig clientConfig = new DefaultClientConfig();
+			clientConfig.getFeatures().put(
+					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+			Client client = Client.create(clientConfig);
+			WebResource webResource = client
+					.resource("http://localhost:8080/employee/rest/json/employee/post");
+			ClientResponse response = webResource.type("application/json")
+					.post(ClientResponse.class, emp);
+			if (response.getStatus() != 201) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+			System.out.println("Output from Server .... \n");
+			String output = response.getEntity(String.class);
+			System.out.println(output);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public Employee getEmployee(Integer empId) {
+		Employee output = null;
+		try {
+			ClientConfig clientConfig = new DefaultClientConfig();
+			clientConfig.getFeatures().put(
+					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+			Client client = Client.create(clientConfig);
+
+			WebResource webResource = client
+					.resource("http://localhost:8080/employee/rest/json/employee/get/"
+							+ empId);
+
+			ClientResponse response = webResource.accept("application/json")
+					.get(ClientResponse.class);
+
+			System.out.println(response.toString());
+			if (response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+			
+			output = response.getEntity(Employee.class);
+			System.out.println("Output from Server .... \n");
+			System.out.println(output);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return output;
+	}
+	
+	public List<Employee> getEmployee() {
+		List<Employee> empList = new ArrayList<Employee>();
+		try {
+			ClientConfig clientConfig = new DefaultClientConfig();
+			clientConfig.getFeatures().put(
+					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+			Client client = Client.create(clientConfig);
+
+			WebResource webResource = client
+					.resource("http://localhost:8080/employee/rest/json/employee/getEmp");
+
+			ClientResponse response = webResource.accept("application/json")
+					.get(ClientResponse.class);
+
+			System.out.println(response.toString());
+			if (response.getStatus() != 201) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+			//
+			empList = (List<Employee>)response.getEntity(new GenericType<List<Employee>>(){});
+			System.out.println("Output from Server .... \n");
+			System.out.println(empList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return empList;
+	}
+	
+	public boolean updateEmployee(Employee emp) {
+		try {
+			ClientConfig clientConfig = new DefaultClientConfig();
+			clientConfig.getFeatures().put(
+					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+
+			Client client = Client.create(clientConfig);
+
+			WebResource webResource = client
+					.resource("http://localhost:8080/employee/rest/json/employee/updateEmp");
+
+			ClientResponse response = webResource.type("application/json")
+					.post(ClientResponse.class, emp);
+
+			if (response.getStatus() != 201) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			System.out.println("Output from Server .... \n");
+			String output = response.getEntity(String.class);
+			System.out.println(output);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public boolean deleteEmployee(Integer empId) {
+		try {
+			ClientConfig clientConfig = new DefaultClientConfig();
+			clientConfig.getFeatures().put(
+					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+
+			Client client = Client.create(clientConfig);
+
+			WebResource webResource = client
+					.resource("http://localhost:8080/employee/rest/json/employee/delete/"
+							+ empId);
+			ClientResponse response = webResource.type("application/json")
+					.post(ClientResponse.class);
+
+			if (response.getStatus() != 201) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			System.out.println("Output from Server .... \n");
+			String output = response.getEntity(String.class);
+			System.out.println(output);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public List<Employee> searchEmployee(Employee emp) {
+		List<Employee> output = null;
+		try {
+			ClientConfig clientConfig = new DefaultClientConfig();
+			clientConfig.getFeatures().put(
+					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+
+			Client client = Client.create(clientConfig);
+
+			boolean flag = false;
+			String uri="";
+			if(emp.getEmpId() != 0){
+				if(!flag) qr = qr.concat("?");
+				qr = qr.concat("empId == " + emp.getEmpId() + " ");
+				t=true;
+			}
+			if(emp.getName() != null && !emp.getName().isEmpty()) {
+				if(t) qr = qr.concat(" && "); 
+				qr = qr.concat("name == '" + emp.getName() + "' ");
+				t=true;
+			}
+			if(emp.getDepartment() != null && !emp.getDepartment().isEmpty()) {
+				if(t) qr = qr.concat(" && ");
+				qr = qr.concat(" department == '" + emp.getDepartment() + "' ");
+				t=true;
+			}
+			if(emp.getAge() != 0){ 
+				if(t) qr = qr.concat(" && ");
+				qr = qr.concat("age == " + emp.getAge() + " ");
+				t=true;
+			}
+			
+			if(emp.getAddress() != null && !emp.getAddress().isEmpty()) { 
+				if(t) qr = qr.concat(" && ");
+				qr = qr.concat("address == '" + emp.getAddress() + "' ");
+				t=true;
+			}
+
+			WebResource webResource = client
+					.resource("http://localhost:8080/employee/rest/json/employee/search"+uri);
+			ClientResponse response = webResource.type("application/json")
+					.post(ClientResponse.class);
+			
+
+			if (response.getStatus() != 201 && response.getStatus() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ response.getStatus());
+			}
+
+			System.out.println("Output from Server .... \n");
+			if(response.getStatus() == 200) System.out.println("Search results in 0 employees.");
+			else output = (List<Employee>)response.getEntity(new GenericType<List<Employee>>(){});
+			if(output != null) System.out.println(output);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return output;
+	}
+}

@@ -34,7 +34,8 @@ public class EmployeeDaoTest {
 				System.out.println("7.  Delete a Employee.");
 				System.out.println("8.  Delete Multiple Employees.");
 				System.out.println("9.  Delete All Employees.");
-				System.out.println("10. Exit.");
+				System.out.println("10. Search Options.");
+				System.out.println("11. Exit.");
 				System.out.print("Enter your choice: ");
 				line = br.readLine();
 				choice = Integer.parseInt(line);
@@ -184,6 +185,43 @@ public class EmployeeDaoTest {
 					break;
 				}
 				case 10: {
+					System.out.println("1. Search by Employee ID.");
+					System.out.println("2. Search by Employee Name.");
+					System.out.println("3. Search by Employee Department.");
+					System.out.println("4. Search by Employee Age.");
+					System.out.println("5. Search by Employee Address.");
+					System.out.print("Enter your choice:");
+					int ch = Integer.parseInt(br.readLine());
+					List<Employee> emList = new ArrayList<Employee>();
+					if(ch == 1) {
+						System.out.print("Enter Employee ID: ");
+						int id = Integer.parseInt(br.readLine());
+						emList = EmployeeDAO.searchEmployee(new Employee(id,null,null,0,null));
+					}
+					else if(ch == 2) {
+						System.out.print("Enter Employee Name: ");
+						//String name = br.readLine();
+						emList = EmployeeDAO.searchEmployee(new Employee(0,"Naveen",null,25,null));
+					} 
+					else if(ch == 3) {
+						System.out.print("Enter Employee Department: ");
+						String department = br.readLine();
+						emList = EmployeeDAO.searchEmployee(new Employee(0,null,department,0,null));
+					}
+					else if(ch == 4) {
+						System.out.print("Enter Employee Age: ");
+						int age  = Integer.parseInt(br.readLine());
+						emList = EmployeeDAO.searchEmployee(new Employee(0,null,null,age,null));
+					}
+					else if(ch == 5) {
+						System.out.print("Enter Employee Address: ");
+						String address = br.readLine();
+						emList = EmployeeDAO.searchEmployee(new Employee(0,null,null,0,address));
+					}
+					System.out.println(emList);
+					break;
+				}
+				case 11: {
 					flag = false;
 					break;
 				}
