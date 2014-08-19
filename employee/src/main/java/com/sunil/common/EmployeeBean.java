@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -12,7 +12,7 @@ import com.sunil.Client.JerseyEmployeeClient;
 import com.sunil.Entities.Employee;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class EmployeeBean {
 
 	private Integer empId;
@@ -20,7 +20,7 @@ public class EmployeeBean {
 	private String department;
 	private Integer age;
 	private String address;
-	
+
 	private List<Employee> empList;
 
 	public Integer getEmpId() {
@@ -71,10 +71,6 @@ public class EmployeeBean {
 		this.empList = empList;
 	}
 
-	public void buttonAction(ActionEvent actionEvent) {
-		addMessage();
-	}
-
 	@Override
 	public String toString() {
 		return "EmployeeBean [empId=" + empId + ", name=" + name
@@ -90,125 +86,122 @@ public class EmployeeBean {
 		this.address = null;
 		this.empList = null;
 	}
-	public void addMessage() {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-				name, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
 
 	public void storeEmployee() {
 		Employee emp = new Employee(this.empId, this.name, this.department,
 				this.age, this.address);
-		
-		if((new JerseyEmployeeClient()).postEmployee(emp)) {
+
+		if (JerseyEmployeeClient.storeEmployee(emp)) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Success", "Added Employee Details"));
-		}
-		else {
+							EmployeeConstants.SUCCESS_MESSAGE,
+							"Added Employee Details"));
+		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Error", "Employee with ID="+ this.empId + " already exists."));
+							EmployeeConstants.ERROR_MESSAGE,
+							"Employee with ID=" + this.empId
+									+ " already exists."));
 		}
 	}
-	
+
 	public void getEmployee() {
-		Employee emp = (new JerseyEmployeeClient()).getEmployee(this.empId);
-		if(emp == null) {
+		Employee emp = JerseyEmployeeClient.getEmployee(this.empId);
+		if (emp == null) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Error","Employee doesnot Exists."));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, EmployeeConstants.ERROR_MESSAGE,
+							"Employee doesnot Exists."));
 			return;
-		}
-		else {
+		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Success", null));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, EmployeeConstants.SUCCESS_MESSAGE,
+							null));
 		}
-		this.empId=emp.getEmpId();
-		this.name=emp.getName();
-		this.department=emp.getDepartment();
-		this.age=emp.getAge();
-		this.address=emp.getAddress();
+		this.empId = emp.getEmpId();
+		this.name = emp.getName();
+		this.department = emp.getDepartment();
+		this.age = emp.getAge();
+		this.address = emp.getAddress();
 	}
 
 	public void getAllEmployee() {
-		List<Employee> eList = (new JerseyEmployeeClient()).getEmployee();
+		List<Employee> eList = JerseyEmployeeClient.getEmployee();
 		this.setEmpList(eList);
-		if(eList != null) {
+		if (eList != null) {
+			FacesContext.getCurrentInstance()
+					.addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_INFO,
+									EmployeeConstants.SUCCESS_MESSAGE, ""));
+			return;
+		} else {
 			FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Success", ""));
-				return;
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, EmployeeConstants.ERROR_MESSAGE,
+							"Error in fetching details."));
+			return;
 		}
-		else {
-				FacesContext.getCurrentInstance().addMessage(
-					null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Error","Error in fetching details."));
-				return;
-			}
 	}
-	
+
 	public void updateEmployee() {
 		Employee emp = new Employee(this.empId, this.name, this.department,
 				this.age, this.address);
-		if((new JerseyEmployeeClient()).updateEmployee(emp)) {
+		if (JerseyEmployeeClient.updateEmployee(emp)) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Success", "Updated Employee Details."));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, EmployeeConstants.SUCCESS_MESSAGE,
+							"Updated Employee Details."));
 			return;
-		}
-		else {
+		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Error","Employee doesnot Exists."));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, EmployeeConstants.ERROR_MESSAGE,
+							"Employee doesnot Exists."));
 			return;
 		}
 	}
-	
+
 	public void deleteEmployee() {
-		if((new JerseyEmployeeClient()).deleteEmployee(this.empId)) {
+		if (JerseyEmployeeClient.deleteEmployee(this.empId)) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Success", "Deleted Employee Details"));
-		}
-		else {
+					new FacesMessage(FacesMessage.SEVERITY_INFO, EmployeeConstants.SUCCESS_MESSAGE,
+							"Deleted Employee Details"));
+		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Error", "Employee with ID=" + this.empId+" doesnot exits."));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, EmployeeConstants.ERROR_MESSAGE,
+							"Employee with ID=" + this.empId
+									+ " doesnot exits."));
 		}
 
 	}
-	
+
 	public void searchEmployee() {
-		Employee emp = new Employee((this.empId==null?0:this.empId), this.name, this.department,
-				(this.age==null?0:this.age), this.address);
-		this.empList = (new JerseyEmployeeClient()).searchEmployee(emp);
-		if(this.empList == null ) {
-			FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR,
-				"Error", "Search Error. please try again."));
+		Employee emp = new Employee(this.empId, this.name, this.department,
+				this.age, this.address);
+		this.empList = JerseyEmployeeClient.searchEmployee(emp);
+		if (this.empList == null) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, EmployeeConstants.ERROR_MESSAGE,
+							"Search Error. please try again."));
+		} else if (this.empList.isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "",
+							"No Results."));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, EmployeeConstants.SUCCESS_MESSAGE,
+							null));
 		}
-		else if( this.empList.isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"", "No Results."));
-		} 
-		else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Success",null));
-		}
-		
+
 	}
-	
+
 }

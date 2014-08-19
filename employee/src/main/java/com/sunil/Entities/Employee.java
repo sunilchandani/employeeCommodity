@@ -3,15 +3,20 @@ package com.sunil.Entities;
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+/**
+ * 
+ * @author sunil
+ *
+ * This is a entity corresponding to the employee tables
+ */
+
 @PersistenceCapable(table="employee", detachable="true")
 public class Employee {
 	
 	@Column(name="empId")
 	@Persistent(primaryKey="true" )
-	private int empId;
+	private Integer empId;
 	
 	@Column(name="name")
 	@Persistent
@@ -23,17 +28,17 @@ public class Employee {
 	
 	@Column(name="age")
 	@Persistent
-	private int age;
+	private Integer age;
 	
 	@Column(name="address")
 	@Persistent
 	private String address;
 
-	public int getEmpId() {
+	public Integer getEmpId() {
 		return empId;
 	}
 
-	public void setEmpId(int empId) {
+	public void setEmpId(Integer empId) {
 		this.empId = empId;
 	}
 
@@ -53,11 +58,11 @@ public class Employee {
 		this.department = department;
 	}
 
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
@@ -73,7 +78,7 @@ public class Employee {
 		super();
 	}
 	
-	public Employee(int empId, String name, String department, int age, String address) {
+	public Employee(Integer empId, String name, String department, Integer age, String address) {
 		this.empId = empId;
 		this.name = name;
 		this.department = department;
@@ -85,6 +90,19 @@ public class Employee {
 	public String toString() {
 		return "Employee [empId=" + empId + ", name=" + name + ", department="
 				+ department + ", age=" + age + ", address=" + address + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((age == null) ? 0 : age.hashCode());
+		result = prime * result
+				+ ((department == null) ? 0 : department.hashCode());
+		result = prime * result + ((empId == null) ? 0 : empId.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
 
 	@Override
@@ -101,14 +119,20 @@ public class Employee {
 				return false;
 		} else if (!address.equals(other.address))
 			return false;
-		if (age != other.age)
+		if (age == null) {
+			if (other.age != null)
+				return false;
+		} else if (!age.equals(other.age))
 			return false;
 		if (department == null) {
 			if (other.department != null)
 				return false;
 		} else if (!department.equals(other.department))
 			return false;
-		if (empId != other.empId)
+		if (empId == null) {
+			if (other.empId != null)
+				return false;
+		} else if (!empId.equals(other.empId))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -117,5 +141,6 @@ public class Employee {
 			return false;
 		return true;
 	}
+
 	
 }

@@ -21,16 +21,18 @@
 				
 				<p:panelGrid id="grid1" columns="2">
 					<p:commandButton value="Reset" update="panel, displayList" id="reset"
-				action="getAllEmployee" immediate="true" actionListener="#{employeeBean.reset}"
-				styleClass="ui-priority-primary" />
+				 action="getAllEmployee" immediate="true" actionListener="#{employeeBean.reset}"
+				 styleClass="ui-priority-primary" />
 					<p:commandButton value="Back" update="panel" id="back"
 				action="welcome" actionListener="#{employeeBean.reset}" immediate="true" styleClass="ui-priority-primary" />
 				</p:panelGrid>
 			</p:panel>
 			
-			<p:panel id="displayList"  for="getAll" style="margin-bottom:10px;" dynamic="true" >
+			<p:panel id="displayList"  for="getAll" style="margin-bottom:10px;" >
 				<p:growl id="growl" showDetail="true" sticky="true" />
-				<p:dataTable value="#{employeeBean.empList}" var="employee" rows="10" paginator="true">
+				<p:dataTable value="#{employeeBean.empList}" var="employee" rows="5" paginator="true"
+				 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+					<f:facet name="header"> Employee Details </f:facet>
 					<p:column headerText="Employee ID">
 						<h:outputText value="#{employee.empId}" />
 					</p:column>

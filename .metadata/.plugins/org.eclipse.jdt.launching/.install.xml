@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
 <entry loc="/usr/lib/jvm/java-7-openjdk-i386" stamp="1405582403000"/>
-<entry loc="/usr/lib/jvm/java-6-openjdk-i386" stamp="1405584706000"/>
+<entry loc="/usr/lib/jvm/java-7-oracle" stamp="1406792958000"/>
+<entry loc="/usr/lib/jvm/java-6-openjdk-i386" stamp="1406793531000"/>
 </dirs>

@@ -50,4 +50,5 @@
 <fullyQualifiedTypeName name="javax.ws.rs.core.Context"/>
 <fullyQualifiedTypeName name="javax.ws.rs.core.UriInfo"/>
 <fullyQualifiedTypeName name="javax.ws.rs.DefaultValue"/>
+<fullyQualifiedTypeName name="com.sunil.DAO.CommodityDAO"/>
 </qualifiedTypeNameHistroy>

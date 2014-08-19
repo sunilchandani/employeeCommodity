@@ -4,6 +4,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
@@ -12,19 +14,26 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sunil.Entities.Employee;
+import com.sunil.common.EmployeeConstants;
 
 public class JerseyEmployeeClient {
-	public boolean postEmployee(Employee emp) {
+
+	private static WebResource getWebResourceForURI(String uri) {
+		ClientConfig clientConfig = new DefaultClientConfig();
+		clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING,
+				Boolean.TRUE);
+		Client client = Client.create(clientConfig);
+		return client.resource(uri);
+	}
+
+	public static boolean storeEmployee(Employee emp) {
 		try {
-			ClientConfig clientConfig = new DefaultClientConfig();
-			clientConfig.getFeatures().put(
-					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-			Client client = Client.create(clientConfig);
-			WebResource webResource = client
-					.resource("http://localhost:8080/employee/rest/json/employee/post");
+			WebResource webResource = getWebResourceForURI(EmployeeConstants.EMPLOYEE_SERVICE_URL
+					+ EmployeeConstants.STORE_EMPLOYEE_URL);
 			ClientResponse response = webResource.type("application/json")
 					.post(ClientResponse.class, emp);
-			if (response.getStatus() != 201) {
+			
+			if (response.getStatus() != HttpServletResponse.SC_CREATED) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
@@ -38,27 +47,21 @@ public class JerseyEmployeeClient {
 		return true;
 	}
 
-	public Employee getEmployee(Integer empId) {
+	public static Employee getEmployee(Integer empId) {
 		Employee output = null;
 		try {
-			ClientConfig clientConfig = new DefaultClientConfig();
-			clientConfig.getFeatures().put(
-					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-			Client client = Client.create(clientConfig);
-
-			WebResource webResource = client
-					.resource("http://localhost:8080/employee/rest/json/employee/get/"
-							+ empId);
+			WebResource webResource = getWebResourceForURI(EmployeeConstants.EMPLOYEE_SERVICE_URL
+					+ EmployeeConstants.GET_EMPLOYEE_URL + empId);
 
 			ClientResponse response = webResource.accept("application/json")
 					.get(ClientResponse.class);
 
 			System.out.println(response.toString());
-			if (response.getStatus() != 200) {
+			if (response.getStatus() != HttpServletResponse.SC_OK) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
-			
+
 			output = response.getEntity(Employee.class);
 			System.out.println("Output from Server .... \n");
 			System.out.println(output);
@@ -68,28 +71,25 @@ public class JerseyEmployeeClient {
 		}
 		return output;
 	}
-	
-	public List<Employee> getEmployee() {
+
+	public static List<Employee> getEmployee() {
 		List<Employee> empList = new ArrayList<Employee>();
 		try {
-			ClientConfig clientConfig = new DefaultClientConfig();
-			clientConfig.getFeatures().put(
-					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-			Client client = Client.create(clientConfig);
-
-			WebResource webResource = client
-					.resource("http://localhost:8080/employee/rest/json/employee/getEmp");
+			WebResource webResource = getWebResourceForURI(EmployeeConstants.EMPLOYEE_SERVICE_URL
+					+ EmployeeConstants.GET_ALL_EMOPLOYEE_URL);
 
 			ClientResponse response = webResource.accept("application/json")
 					.get(ClientResponse.class);
 
 			System.out.println(response.toString());
-			if (response.getStatus() != 201) {
+			if (response.getStatus() != HttpServletResponse.SC_OK) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
 			//
-			empList = (List<Employee>)response.getEntity(new GenericType<List<Employee>>(){});
+			empList = (List<Employee>) response
+					.getEntity(new GenericType<List<Employee>>() {
+					});
 			System.out.println("Output from Server .... \n");
 			System.out.println(empList);
 		} catch (Exception e) {
@@ -98,22 +98,16 @@ public class JerseyEmployeeClient {
 		}
 		return empList;
 	}
-	
-	public boolean updateEmployee(Employee emp) {
+
+	public static boolean updateEmployee(Employee emp) {
 		try {
-			ClientConfig clientConfig = new DefaultClientConfig();
-			clientConfig.getFeatures().put(
-					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-
-			Client client = Client.create(clientConfig);
-
-			WebResource webResource = client
-					.resource("http://localhost:8080/employee/rest/json/employee/updateEmp");
+			WebResource webResource = getWebResourceForURI(EmployeeConstants.EMPLOYEE_SERVICE_URL
+					+ EmployeeConstants.UPDATE_EMPLOYEE_URL);
 
 			ClientResponse response = webResource.type("application/json")
 					.post(ClientResponse.class, emp);
 
-			if (response.getStatus() != 201) {
+			if (response.getStatus() != HttpServletResponse.SC_CREATED) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
@@ -128,21 +122,14 @@ public class JerseyEmployeeClient {
 		return true;
 	}
 
-	public boolean deleteEmployee(Integer empId) {
+	public static boolean deleteEmployee(Integer empId) {
 		try {
-			ClientConfig clientConfig = new DefaultClientConfig();
-			clientConfig.getFeatures().put(
-					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-
-			Client client = Client.create(clientConfig);
-
-			WebResource webResource = client
-					.resource("http://localhost:8080/employee/rest/json/employee/delete/"
-							+ empId);
+			WebResource webResource = getWebResourceForURI(EmployeeConstants.EMPLOYEE_SERVICE_URL
+					+ EmployeeConstants.DELETE_EMPLOYEE_URL + empId);
 			ClientResponse response = webResource.type("application/json")
 					.post(ClientResponse.class);
 
-			if (response.getStatus() != 201) {
+			if (response.getStatus() != HttpServletResponse.SC_CREATED) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
@@ -158,67 +145,72 @@ public class JerseyEmployeeClient {
 		return true;
 	}
 
-	public List<Employee> searchEmployee(Employee emp) {
+	public static List<Employee> searchEmployee(Employee emp) {
 		List<Employee> output = null;
 		try {
-			ClientConfig clientConfig = new DefaultClientConfig();
-			clientConfig.getFeatures().put(
-					JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-
-			Client client = Client.create(clientConfig);
-
 			boolean flag = false;
-			String uri="";
-			if(emp.getEmpId() != 0){
-				if(!flag) uri = uri.concat("?");
-				else uri = uri.concat("&");
+			String uri = "";
+			if (emp.getEmpId() != null) {
+				if (!flag)
+					uri = uri.concat("?");
+				else
+					uri = uri.concat("&");
 				uri = uri.concat("empId=" + emp.getEmpId());
 				flag = true;
 			}
-			if(emp.getName() != null && !emp.getName().isEmpty()) {
-				if(!flag) uri = uri.concat("?");
-				else uri = uri.concat("&");
-				uri = uri.concat("name=" + URLEncoder.encode(emp.getName(), "UTF-8"));
+			if (emp.getName() != null && !emp.getName().isEmpty()) {
+				if (!flag)
+					uri = uri.concat("?");
+				else
+					uri = uri.concat("&");
+				uri = uri.concat("name="
+						+ URLEncoder.encode(emp.getName(), "UTF-8"));
 				flag = true;
 			}
-			if(emp.getDepartment() != null && !emp.getDepartment().isEmpty()) {
-				if(!flag) uri = uri.concat("?");
-				else uri = uri.concat("&");
-				uri = uri.concat("department=" + URLEncoder.encode(emp.getDepartment(), "UTF-8"));
+			if (emp.getDepartment() != null && !emp.getDepartment().isEmpty()) {
+				if (!flag)
+					uri = uri.concat("?");
+				else
+					uri = uri.concat("&");
+				uri = uri.concat("department="
+						+ URLEncoder.encode(emp.getDepartment(), "UTF-8"));
 				flag = true;
 			}
-			if(emp.getAge() != 0){ 
-				if(!flag) uri = uri.concat("?");
-				else uri = uri.concat("&");
+			if (emp.getAge() != null) {
+				if (!flag)
+					uri = uri.concat("?");
+				else
+					uri = uri.concat("&");
 				uri = uri.concat("age=" + emp.getAge());
 				flag = true;
 			}
-			
-			if(emp.getAddress() != null && !emp.getAddress().isEmpty()) { 
-				if(!flag) uri = uri.concat("?");
-				else uri = uri.concat("&");
-				uri = uri.concat("address=" + URLEncoder.encode(emp.getAddress(), "UTF-8"));
+
+			if (emp.getAddress() != null && !emp.getAddress().isEmpty()) {
+				if (!flag)
+					uri = uri.concat("?");
+				else
+					uri = uri.concat("&");
+				uri = uri.concat("address="
+						+ URLEncoder.encode(emp.getAddress(), "UTF-8"));
 				flag = true;
 			}
-			
-			System.out.println("Employee: " + emp);
-			uri = "http://localhost:8080/employee/rest/json/employee/search"+uri;
-			System.out.println("URI: " + uri);
-			uri.replaceAll(" ", "%20");
-			System.out.println("URI: " + uri);
-			WebResource webResource = client.resource(uri);
-			ClientResponse response = webResource.type("application/json").get(ClientResponse.class);
-			
 
-			if (response.getStatus() != 201 && response.getStatus() != 200) {
+			System.out.println("Employee: " + emp);
+			uri = EmployeeConstants.EMPLOYEE_SERVICE_URL
+					+ EmployeeConstants.SEARCH_EMPLOYEE_URL + uri;
+			WebResource webResource = getWebResourceForURI(uri);
+			ClientResponse response = webResource.type("application/json").get(
+					ClientResponse.class);
+
+			if (response.getStatus() != HttpServletResponse.SC_OK) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatus());
 			}
 
 			System.out.println("Output from Server .... \n");
-			if(response.getStatus() == 200) System.out.println("Search results in 0 employees.");
-			else output = (List<Employee>) response.getEntity(new GenericType<List<Employee>>(){});
-			if(output != null) System.out.println(output);
+			output = (List<Employee>) response.getEntity(new GenericType<List<Employee>>() {});
+			if (output != null)
+				System.out.println(output);
 
 		} catch (Exception e) {
 			e.printStackTrace();

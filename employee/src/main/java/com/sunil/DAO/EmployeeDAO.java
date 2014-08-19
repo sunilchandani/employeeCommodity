@@ -1,7 +1,6 @@
 package com.sunil.DAO;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.jdo.JDOHelper;
@@ -28,7 +27,7 @@ public class EmployeeDAO {
 	 * 
 	 * Stores Employee details in the database. Return values indicates that the details are added or not.
 	 * 
-	 * @param emp:Employee
+	 * @param emp : Employee
 	 * @return boolean
 	 * 
 	 */
@@ -43,9 +42,9 @@ public class EmployeeDAO {
 			transaction.commit();
 		}
 		catch(Exception e) {
-			System.out.println("Exception: " + e.getMessage());
 			transaction.rollback();
 			pm.close();
+			System.out.println("Exception: " + e.getMessage());
 			return transactionStatus;
 		} 
 		finally {
@@ -57,7 +56,6 @@ public class EmployeeDAO {
 			}
 			pm.close();
 		}
-		
 		return transactionStatus;
 	}
 	
@@ -66,7 +64,7 @@ public class EmployeeDAO {
 	 * 
 	 * Stores multiple employee details in the database. return values indicates success/failure of this event.
 	 * 
-	 * @param empList:List<Employee>
+	 * @param empList : List<Employee>
 	 * @return boolean
 	 */
 	public static boolean storeEmployee(List<Employee> empList) {
@@ -80,8 +78,10 @@ public class EmployeeDAO {
 			transaction.commit();
 		} 
 		catch(Exception e) {
+			transaction.rollback();
+			pm.close();
 			System.out.println("Exception: " + e.getMessage());
-			System.out.println(e);
+			return transactionStatus;
 		} 
 		finally {
 			if(transaction.isActive()) {
@@ -101,7 +101,7 @@ public class EmployeeDAO {
 	 * 
 	 * It fetches the Employee details from the database corresponding to empId. if empId doesnot exists in database then it returns null.
 	 * 
-	 * @param empId:Integer
+	 * @param empId : Integer
 	 * @return Employee
 	 */
 	public static Employee getEmployee(Integer empId) {
@@ -121,11 +121,10 @@ public class EmployeeDAO {
 		} 
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage());
-		} 
+		}
 		finally {
 				pm.close();
 		}
-		
 		return employee;
 	}
 	
@@ -136,6 +135,7 @@ public class EmployeeDAO {
 	 * 
 	 * @return List<Employee>
 	 */
+	@SuppressWarnings("unchecked")
 	public static List<Employee> getEmployee() {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Employee> empList = new ArrayList<Employee>(); ;
@@ -160,7 +160,7 @@ public class EmployeeDAO {
 	 * 
 	 * It updates the Employee details in the database corresponding to Employee. 
 	 * 
-	 * @param empId:Integer
+	 * @param emp : Employee
 	 * @return boolean
 	 */
 	public static boolean updateEmployee(Employee emp) {
@@ -177,13 +177,18 @@ public class EmployeeDAO {
 			query.setUnique(true);
 			persistentEmp = (Employee) query.execute(emp.getEmpId());
 			
-			persistentEmp.setAddress(emp.getAddress());
-			persistentEmp.setAge(emp.getAge());
-			persistentEmp.setDepartment(emp.getDepartment());
-			persistentEmp.setName(emp.getName());
-
-			transaction.commit();
-		} 
+			if(persistentEmp == null) {
+				System.out.println("No Employee Exists with Employee ID:" + emp.getEmpId());
+			}
+			else {
+				persistentEmp.setAddress(emp.getAddress());
+				persistentEmp.setAge(emp.getAge());
+				persistentEmp.setDepartment(emp.getDepartment());
+				persistentEmp.setName(emp.getName());
+				pm.makePersistent(persistentEmp);
+				transaction.commit();
+			}
+		}
 		catch(Exception e) {
 			System.out.println("Exception: " + e.getMessage());
 		} 
@@ -196,16 +201,15 @@ public class EmployeeDAO {
 			}
 			pm.close();
 		}
-		
 		return transactionStatus;
 	}
 	
 	/**
 	 * @author sunil kumar
 	 * 
-	 * It updates the Multiple Employee details in the database corresponding to list of Employee's. 
+	 *  It updates the Multiple Employee details in the database corresponding to list of Employee's. 
 	 * 
-	 * @param empId:Integer
+	 * @param empList : List<Employee>
 	 * @return boolean
 	 */
 	public static boolean updateEmployee(List<Employee> empList) {
@@ -224,11 +228,17 @@ public class EmployeeDAO {
 				query.setUnique(true);
 				employee = (Employee) query.execute(emp.getEmpId());
 				
-				employee.setAddress(emp.getAddress());
-				employee.setAge(emp.getAge());
-				employee.setDepartment(emp.getDepartment());
-				employee.setName(emp.getName());
-			}			
+				if(employee == null) {
+					System.out.println("No Employee Exists with Employee ID:" + emp.getEmpId());
+				} 
+				else {
+					employee.setAddress(emp.getAddress());
+					employee.setAge(emp.getAge());
+					employee.setDepartment(emp.getDepartment());
+					employee.setName(emp.getName());
+					pm.makePersistent(employee);
+				}	
+			}
 			transaction.commit();
 		} 
 		catch(Exception e) {
@@ -243,7 +253,6 @@ public class EmployeeDAO {
 			}
 			pm.close();
 		}
-		
 		return transactionStatus;
 	}
 
@@ -252,25 +261,24 @@ public class EmployeeDAO {
 	 * 
 	 * It deletes the Employee details from the database corresponding to empId. 
 	 * 
-	 * @param empId:Integer
+	 * @param empId : Integer
 	 * @return boolean
 	 */
 	public static boolean deleteEmployee(Integer empId) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction transaction = pm.currentTransaction();
 		boolean status = false;
-		Employee employee = null; 
-		
+		 
 		try {
 			transaction.begin();
 			Query query = pm.newQuery(Employee.class);
 			query.setFilter("this.empId == id");
 			query.declareParameters("Integer id");
 			query.setUnique(true);
-			employee = (Employee) query.execute(empId);
+			Employee employee = (Employee) query.execute(empId);
 			
 			if(employee == null) {
-				System.out.println("No Employee with empId: " + empId);
+				System.out.println("No Employee exists with empId: " + empId);
 			} 
 			else {
 				pm.deletePersistent(employee);
@@ -316,7 +324,7 @@ public class EmployeeDAO {
 				employee = (Employee) query.execute(empId);
 				
 				if(employee == null) {
-					System.out.println("No Employee with empId: " + empId);
+					System.out.println("No Employee exists with empId: " + empId);
 				} 
 				else {
 					pm.deletePersistent(employee);
@@ -347,6 +355,7 @@ public class EmployeeDAO {
 	 * 
 	 * @return boolean
 	 */
+	@SuppressWarnings("unchecked")
 	public static boolean  deleteEmployee() {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Employee> empList = new ArrayList<Employee>(); 
@@ -376,38 +385,39 @@ public class EmployeeDAO {
 		return status;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static List<Employee> searchEmployee(Employee emp) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		List<Employee> empList = null;
-		boolean t =false;
+		boolean isStart = false;
 		String qr = "";
 		if(emp.getEmpId() != 0){
-			if(t) qr = qr.concat(" && ");
+			if(isStart) qr = qr.concat(" && ");
 			qr = qr.concat("empId == " + emp.getEmpId() + " ");
-			t=true;
+			isStart = true;
 		}
 		if(emp.getName() != null && !emp.getName().isEmpty()) {
-			if(t) qr = qr.concat(" && "); 
+			if(isStart) qr = qr.concat(" && "); 
 			qr = qr.concat("name == '" + emp.getName() + "' ");
-			t=true;
+			isStart = true;
 		}
 		if(emp.getDepartment() != null && !emp.getDepartment().isEmpty()) {
-			if(t) qr = qr.concat(" && ");
+			if(isStart) qr = qr.concat(" && ");
 			qr = qr.concat(" department == '" + emp.getDepartment() + "' ");
-			t=true;
+			isStart = true;
 		}
 		if(emp.getAge() != 0){ 
-			if(t) qr = qr.concat(" && ");
+			if(isStart) qr = qr.concat(" && ");
 			qr = qr.concat("age == " + emp.getAge() + " ");
-			t=true;
+			isStart = true;
 		}
 		
 		if(emp.getAddress() != null && !emp.getAddress().isEmpty()) { 
-			if(t) qr = qr.concat(" && ");
+			if(isStart) qr = qr.concat(" && ");
 			qr = qr.concat("address == '" + emp.getAddress() + "' ");
-			t=true;
+			isStart = true;
 		}
-		System.out.println("Query: "+qr);
+		// System.out.println("Query: "+qr);
 		try {
 			if(qr.isEmpty()){
 				Query query = pm.newQuery(Employee.class);
