@@ -1,0 +1,6 @@
+package com.sunil.common;
+
+public class CommodityConstants {
+
+	public static final String COMMODITY_TYPE_GENERAL = "GENERAL" ;
+}

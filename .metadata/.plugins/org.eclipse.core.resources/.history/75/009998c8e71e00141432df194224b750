@@ -1,0 +1,139 @@
+package com.sunil.rest;
+
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import com.sunil.entities.Commodity;
+import com.sunil.common.CommodityConstants;
+
+/**
+ * @author Sunil Kumar
+ * 
+ * Service class for Commodity. Defines all methods corresponding to service
+ *
+ */
+@Path(CommodityConstants.COMMODITY_SERVICE_URI)
+public class CommodityService {
+
+	/**
+	 * @author Sunil Kumar
+	 * 
+	 * Service method for stroring commodity.
+	 * @param commodity : Commodity
+	 */
+	@POST
+	@Path(CommodityConstants.STORE_COMMODITY_URI)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response storeCommodity(Commodity commodity) {
+		boolean status = CommodityDAO.storeCommodity(employee);
+		if (status) {
+			return Response.status(201).entity("Commodity Details added.")
+					.build();
+		} else {
+			return Response.status(202).entity("Employee Already Exists.")
+					.build();
+		}
+	}
+
+	/**
+	 * @author Sunil Kumar
+	 * 
+	 * Service method for fetching commodity details by using commodity ID.
+	 * @param id : Long
+	 */
+	@GET
+	@Path(CommodityConstants.GET_COMMODITY_URI + CommodityConstants.PARAM_URI)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmployee(@PathParam("param") Long id) {
+		Commodity commodity = CommodityDAO.getCommodity(id);
+		return Response.status(200).entity(commodity).build();
+	}
+
+	/**
+	 * @author Sunil Kumar
+	 * 
+	 * Service method for fetching commodity details by using commodity name.
+	 * @param name : String
+	 */
+	@GET
+	@Path(CommodityConstants.GET_COMMODITY_URI + CommodityConstants.PARAM_URI)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmployee(@PathParam("param") String name) {
+		List<Commodity> commodities = CommodityDAO.getCommodity(name);
+		GenericEntity<List<Commodity>> entity = new GenericEntity<List<Commodity>>(
+				commodities) {
+		};
+		return Response.status(200).entity(entity).build();
+	}
+
+	/**
+	 * @author Sunil Kumar
+	 * 
+	 * Service method for fetching all commodities from database.
+	 * 
+	 */
+	@GET
+	@Path(CommodityConstants.GET_COMMODITY_URI)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmployee() {
+		List<Commodity> commodities = CommodityDAO.getCommodity();
+		GenericEntity<List<Commodity>> entity = new GenericEntity<List<Commodity>>(
+				commodities) {
+		};
+		return Response.status(200).entity(entity).build();
+	}
+
+	/**
+	 * @author Sunil Kumar
+	 * 
+	 * Service method for updating commodity details.
+	 * @param commodity : Commodity
+	 */
+	@POST
+	@Path(CommodityConstants.UPDATE_COMMODITY_URI)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateCommodity(Commodity commodity) {
+		boolean status = CommodityDAO.updateCommodity(commodity);
+		if (status) {
+			return Response.status(201)
+					.entity("Updated:\n" + commodity.toString()).build();
+		} else {
+			return Response
+					.status(202)
+					.entity("Error in Updation: No Commodity with ID="
+							+commodity.getId() + " exist.").build();
+		}
+	}
+
+	/**
+	 * @author Sunil Kumar
+	 * 
+	 * Service method for deleting commodity details.
+	 * @param id : Long 
+	 *
+	 */
+	@POST
+	@Path(CommodityConstants.DELETE_COMMODITY_URI + CommodityConstants.PARAM_URI)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response deleteCommodity(@PathParam("param") Long id) {
+		boolean status = EmployeeDAO.deleteCommodity(id);
+		if (status) {
+			return Response.status(201).entity("Commodity details Deleted\n")
+					.build(); 
+		}
+		else {
+			return Response.status(202)
+					.entity("No Commodity with Commodity ID:" + id + " exists.\n")
+					.build();
+		}
+	}
+}

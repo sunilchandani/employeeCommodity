@@ -1,0 +1,36 @@
+16:20:50,538 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 4.0.1) for API "JDO"
+16:20:50,817 (main) WARN  [DataNucleus.MetaData] - Metadata has jdbc-type of null yet this is not valid. Ignored
+16:20:50,902 (main) INFO  [DataNucleus.Enhancer] - Writing class file "/home/sunil/Training/commodities/target/classes/com/sunil/entities/Commodity.class" with enhanced definition
+16:20:50,903 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 1 classes.
+16:28:43,015 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 4.0.1) for API "JDO"
+16:28:43,484 (main) WARN  [DataNucleus.MetaData] - Metadata has jdbc-type of null yet this is not valid. Ignored
+16:28:43,580 (main) INFO  [DataNucleus.Enhancer] - Class "com.sunil.entities.Commodity" is already enhanced.
+16:28:43,581 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 1 classes.
+16:28:43,650 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 4.0.1) for API "JDO"
+16:28:43,918 (main) WARN  [DataNucleus.MetaData] - Metadata has jdbc-type of null yet this is not valid. Ignored
+16:28:43,973 (main) INFO  [DataNucleus.Enhancer] - Class "com.sunil.entities.Commodity" is already enhanced.
+16:28:43,973 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 1 classes.
+16:29:38,544 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 4.0.1) for API "JDO"
+16:29:38,788 (main) WARN  [DataNucleus.MetaData] - Metadata has jdbc-type of null yet this is not valid. Ignored
+16:29:38,836 (main) INFO  [DataNucleus.Enhancer] - Class "com.sunil.entities.Commodity" is already enhanced.
+16:29:38,836 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 1 classes.
+16:29:59,945 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 4.0.1) for API "JDO"
+16:30:00,206 (main) WARN  [DataNucleus.MetaData] - Metadata has jdbc-type of null yet this is not valid. Ignored
+16:30:00,258 (main) INFO  [DataNucleus.Enhancer] - Class "com.sunil.entities.Commodity" is already enhanced.
+16:30:00,258 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 1 classes.
+17:20:34,929 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 4.0.1) for API "JDO"
+17:20:35,291 (main) WARN  [DataNucleus.MetaData] - Metadata has jdbc-type of null yet this is not valid. Ignored
+17:20:35,401 (main) INFO  [DataNucleus.Enhancer] - Class "com.sunil.entities.Commodity" is already enhanced.
+17:20:35,401 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 1 classes.
+11:38:22,633 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 4.0.1) for API "JDO"
+11:38:22,974 (main) WARN  [DataNucleus.MetaData] - Metadata has jdbc-type of null yet this is not valid. Ignored
+11:38:23,061 (main) INFO  [DataNucleus.Enhancer] - Writing class file "/home/sunil/Training/commodities/target/classes/com/sunil/entities/Commodity.class" with enhanced definition
+11:38:23,062 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 1 classes.
+11:38:54,722 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 4.0.1) for API "JDO"
+11:38:55,128 (main) WARN  [DataNucleus.MetaData] - Metadata has jdbc-type of null yet this is not valid. Ignored
+11:38:55,207 (main) INFO  [DataNucleus.Enhancer] - Class "com.sunil.entities.Commodity" is already enhanced.
+11:38:55,207 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 1 classes.
+13:57:07,695 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer (version 4.0.1) for API "JDO"
+13:57:08,306 (main) WARN  [DataNucleus.MetaData] - Metadata has jdbc-type of null yet this is not valid. Ignored
+13:57:08,478 (main) INFO  [DataNucleus.Enhancer] - Class "com.sunil.entities.Commodity" is already enhanced.
+13:57:08,478 (main) INFO  [DataNucleus.Enhancer] - DataNucleus Enhancer completed with success for 1 classes.

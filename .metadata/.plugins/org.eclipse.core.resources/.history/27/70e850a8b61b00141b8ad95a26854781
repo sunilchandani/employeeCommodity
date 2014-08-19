@@ -1,0 +1,269 @@
+package com.sunil.DAO;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jdo.JDOHelper;
+import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
+import javax.jdo.Transaction;
+
+import com.sunil.entities.Commodity;
+
+public class CommodityDAO {
+	private	static PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * Stores Commodity details in the database. Return values indicates that the details are added or not.
+	 * 
+	 * @param commodity:Commodity
+	 * @return boolean
+	 * 
+	 */
+	public static boolean storeCommodity(Commodity commodity) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction transaction = pm.currentTransaction();
+		boolean transactionStatus = false ;
+		
+		try {
+			transaction.begin();
+			pm.makePersistent(commodity);
+			transaction.commit();
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+			transaction.rollback();
+			pm.close();
+			return transactionStatus;
+		} 
+		finally {
+			if(transaction.isActive()) {
+				transaction.rollback();
+			} 
+			else {
+				transactionStatus = true;
+			}
+			pm.close();
+		}
+		return transactionStatus;
+	}
+	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * Stores list of commodities details in the database. Return values indicates that the details are added or not.
+	 * 
+	 * @param commodityList : List<Commodity>
+	 * @return boolean
+	 * 
+	 */
+	public static boolean storeCommodity(List<Commodity> commodityList) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction transaction = pm.currentTransaction();
+		boolean transactionStatus = false ;
+		
+		try {
+			transaction.begin();
+			pm.makePersistentAll(commodityList);
+			transaction.commit();
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+			transaction.rollback();
+			pm.close();
+			return transactionStatus;
+		} 
+		finally {
+			if(transaction.isActive()) {
+				transaction.rollback();
+			} 
+			else {
+				transactionStatus = true;
+			}
+			pm.close();
+		}
+		return transactionStatus;
+	}
+	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It fetches the Commodity details from the database corresponding to Id. if Id doesnot exists in database then it returns null.
+	 * 
+	 * @param id : Long
+	 * @return Commodity
+	 */
+	public static Commodity getCommodity(Long id) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Commodity commodity = null;
+		
+		try {
+			Query query = pm.newQuery(Commodity.class);
+			query.setFilter("this.id == id");
+			query.declareParameters("Long id");
+			query.setUnique(true);
+			commodity = (Commodity) query.execute(id);
+			pm.makeTransient(commodity);
+			if(commodity == null) {
+				System.out.println("No Commodity exists with id: " + id);
+			}
+		} 
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} 
+		finally {
+				pm.close();
+		}
+		
+		return commodity;
+	}
+	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It fetches the All the Commodity details from the database. 
+	 * 
+	 * @return List<Commodity>
+	 */
+	public static List<Commodity> getCommodity() {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		List<Commodity> commodityList = new ArrayList<Commodity>(); ;
+
+		try {
+			Query query = pm.newQuery(Commodity.class);
+			commodityList = (List<Commodity>) query.execute();
+			pm.makeTransientAll(commodityList);
+		} 
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} 
+		finally {
+				pm.close();
+		}
+		
+		return commodityList;
+	}
+	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It updates the Commodity details in the database corresponding to Commodity Table. 
+	 * 
+	 * @param commodity : commodity
+	 * @return boolean
+	 */
+	public static boolean updateCommodity(Commodity commodity) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction transaction = pm.currentTransaction();
+		boolean transactionStatus = false ;
+		Commodity persistentCommodity ;
+
+		try {
+			transaction.begin();
+			Query query  = pm.newQuery(Commodity.class);
+			query.setFilter("this.id == id");
+			query.declareParameters("Long id");
+			query.setUnique(true);
+			persistentCommodity = (Commodity) query.execute(commodity.getId());
+			
+			persistentCommodity.setName(commodity.getName());
+			persistentCommodity.setPrice(commodity.getPrice());
+			persistentCommodity.setType(commodity.getType());
+			persistentCommodity.setExpiryDate(commodity.getExpiryDate());
+			
+			transaction.commit();
+		} 
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} 
+		finally {
+			if(transaction.isActive()) {
+				transaction.rollback();
+			} 
+			else {
+				transactionStatus = true;
+			}
+			pm.close();
+		}
+		return transactionStatus;
+	}
+	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * It deletes the Commodity details from the Commodity table corresponding to id. 
+	 * 
+	 * @param id : Long
+	 * @return boolean
+	 */
+	public static boolean deleteCommodity(Long id) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction transaction = pm.currentTransaction();
+		boolean status = false;
+		Commodity commodity = null; 
+		
+		try {
+			transaction.begin();
+			Query query = pm.newQuery(Commodity.class);
+			query.setFilter("this.id == id");
+			query.declareParameters("Long id");
+			query.setUnique(true);
+			commodity = (Commodity) query.execute(id);
+			
+			if(commodity == null) {
+				System.out.println("No Commodity exists with id: " + id);
+			} 
+			else {
+				pm.deletePersistent(commodity);
+				transaction.commit();
+			}
+		}
+		catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		} 
+		finally {
+			if(transaction.isActive()) {
+				transaction.rollback();
+			}
+			else {
+				status = true;
+			}
+			pm.close();
+		}
+		return status;
+	}
+
+	/**
+	 * @author sunil kumar
+	 * 
+	 * This method searches the Commodity details by id.
+	 * 
+	 * @param id : Long
+	 * @return Commodity
+	 * 
+	 */
+	public static Commodity search(Long id) {
+		return getCommodity(id);
+	}
+	
+	/**
+	 * @author sunil kumar
+	 * 
+	 * This method searches the Commodity details by commodity name and returns all these commodities.
+	 * 
+	 * @param name : String
+	 * @return List<Commodity>
+	 * 
+	 */
+	public static List<Commodity> search(String name) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		List<Commodity> commodityList = ArrayList<Commodity>();
+	
+	}
+	
+	
+
+}

@@ -1,0 +1,261 @@
+package commodities;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.sunil.DAO.CommodityDAO;
+import com.sunil.common.CommodityConstants;
+import com.sunil.entities.Commodity;
+
+public class CommodityDaoTest {
+public static void main(String[] args) {
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		int choice;
+		String line;
+		boolean flag;
+		
+		try {
+			do {
+				flag = true;
+				System.out.println("-----------------------------------------------");
+				System.out.println("---------------Welcome to Commodity Menu-----------------");
+				System.out.println("-----------------------------------------------");
+				System.out.println("1.  Store Commodity.");
+				System.out.println("2.  Store Multiple Commodities.");
+				System.out.println("3.  Get All Commodities.");
+				System.out.println("4.  Update Commodity Details.");
+				System.out.println("5.  Delete a Commodity.");
+				System.out.println("6.  Delete All Commodities.");
+				System.out.println("7. Search Commodity by ID.");
+				System.out.println("8. Search Commodity by Name.");
+				System.out.println("9. Exit.");
+				System.out.print("Enter your choice: ");
+				line = br.readLine();
+				choice = Integer.parseInt(line);
+				System.out.println("-----------------------------------------------");
+				switch (choice) {
+				case 1: {
+					Commodity commodity = new Commodity();
+					System.out.print("Enter Commodity Name: ");
+					commodity.setName(br.readLine());
+					System.out.print("Enter Commodity Price: ");
+					commodity.setPrice(Double.parseDouble(br.readLine()));
+					System.out.println("Enter Commodity Type: ");
+					System.out.println("0 => General Type (Default)");
+					System.out.println("1 => Food Item");
+					System.out.println("2 => Electronics Item");
+					int type = Integer.parseInt(br.readLine());
+					if(type == 1){
+						commodity.setType(CommodityConstants.COMMODITY_TYPE_FOOD_ITEM);
+						System.out.print("Enter Expiry Date for Food Commodity: (dd/mm/yyyy): ");
+						commodity.setExpiryDate(sdf.parse(br.readLine()));
+					} else if(type == 2) {
+						commodity.setType(CommodityConstants.COMMODITY_TYPE_ELECTRINOC);
+						commodity.setExpiryDate(null);
+					} else {  // Default
+						commodity.setType(CommodityConstants.COMMODITY_TYPE_GENERAL);
+						commodity.setExpiryDate(null);
+					}
+					
+					if (CommodityDAO.storeCommodity(commodity)) {
+						System.out.println("Added Commodity details.");
+					} else {
+						System.out.println("Error Occured in adding commodity details.");
+					}
+					break;
+				}
+				case 2: {
+					List<Commodity> commodityList = new ArrayList<Commodity>();
+					System.out.print("Enter Number of commodities to be added: ");
+					int counter = Integer.parseInt(br.readLine());
+					while (counter-- != 0) {
+						Commodity commodity = new Commodity();
+						System.out.print("Enter Commodity Name: ");
+						commodity.setName(br.readLine());
+						System.out.print("Enter Commodity Price: ");
+						commodity.setPrice(Double.parseDouble(br.readLine()));
+						System.out.println("Enter Commodity Type: ");
+						System.out.println("0 => General Type (Default)");
+						System.out.println("1 => Food Item");
+						System.out.println("2 => Electronics Item");
+						int type = Integer.parseInt(br.readLine());
+						if(type == 1){
+							commodity.setType(CommodityConstants.COMMODITY_TYPE_FOOD_ITEM);
+							System.out.print("Enter Expiry Date for Food Commodity: (dd/mm/yyyy): ");
+							commodity.setExpiryDate(sdf.parse(br.readLine()));
+						} else if(type == 2) {
+							commodity.setType(CommodityConstants.COMMODITY_TYPE_ELECTRINOC);
+							commodity.setExpiryDate(null);
+						} else {  // Default
+							commodity.setType(CommodityConstants.COMMODITY_TYPE_GENERAL);
+							commodity.setExpiryDate(null);
+						}
+
+						commodityList.add(commodity);
+					}
+					if (CommodityDAO.storeCommodity(commodityList)) {
+						System.out.println("Added All Commodities.");
+					} else {
+						System.out
+								.println("Error occured in adding Commodity details.");
+					}
+					break;
+				}
+				case 3: {
+					List<Commodity> commodityList = CommodityDAO.getCommodity();
+					for (Commodity commodity : commodityList) {
+						System.out.println(commodity.toString());
+					}
+					break;
+				}
+				case 4: {
+					Commodity commodity = new Commodity();
+					System.out.print("Enter Commodity ID for which details has to be updated: ");
+					commodity.setId(Integer.parseInt(br.readLine()));
+					System.out.print("Enter Commodity Name: ");
+					commodity.setName(br.readLine());
+					System.out.print("Enter Commodity Price: ");
+					commodity.setPrice(Double.parseDouble(br.readLine()));
+					System.out.println("Enter Commodity Type: ");
+					System.out.println("0 => General Type (Default)");
+					System.out.println("1 => Food Item");
+					System.out.println("2 => Electronics Item");
+					int type = Integer.parseInt(br.readLine());
+					if(type == 1){
+						commodity.setType(CommodityConstants.COMMODITY_TYPE_FOOD_ITEM);
+						System.out.print("Enter Expiry Date for Food Commodity: (dd/mm/yyyy): ");
+						commodity.setExpiryDate(sdf.parse(br.readLine()));
+					} else if(type == 2) {
+						commodity.setType(CommodityConstants.COMMODITY_TYPE_ELECTRINOC);
+						commodity.setExpiryDate(null);
+					} else {  // Default
+						commodity.setType(CommodityConstants.COMMODITY_TYPE_GENERAL);
+						commodity.setExpiryDate(null);
+					}
+
+					if (CommodityDAO.updateCommodity(commodity)) {
+						System.out.println("Commodity details updated.");
+					} else {
+						System.out.println("Error occured in updating Commodity details.");
+					}
+					break;
+				}
+				case 6: {
+					List<Employee> empList = new ArrayList<Employee>();
+					System.out.print("Enter Number of employeed to be Updated: ");
+					int counter = Integer.parseInt(br.readLine());
+					while (counter-- != 0) {
+						Employee emp = new Employee();
+						System.out.print("Enter Employee ID for which details has to be updated: ");
+						emp.setEmpId(Integer.parseInt(br.readLine()));
+						System.out.print("Enter Updated Name: ");
+						emp.setName(br.readLine());
+						System.out.print("Enter Updated Department: ");
+						emp.setDepartment(br.readLine());
+						System.out.print("Enter Updated Age: ");
+						emp.setAge(Integer.parseInt(br.readLine()));
+						System.out.print("Enter Updated Address: ");
+						emp.setAddress(br.readLine());
+						empList.add(emp);
+					}
+					if(EmployeeDAO.updateEmployee(empList)) {
+						System.out.println("Employee details updated.");
+					} else {
+						System.out.println("Error occured in updating Employee details.");
+					}
+					break;
+				}
+				case 7: {
+					System.out.print("Enter Employee ID for deleting: ");
+					if(EmployeeDAO.deleteEmployee(Integer.parseInt(br.readLine())))
+						System.out.println("Employee Details Deleted.");
+					else 
+						System.out.println("Error occured in deleting Employee.");
+					break;
+				}
+				case 8: {
+					List<Integer> idList = new ArrayList<Integer>();
+					System.out.print("Number of Employees to be deleted: ");
+					int counter = Integer.parseInt(br.readLine());
+					System.out.print("Enter Employee ID's for deleting: ");
+					while(counter != 0) {
+						line = br.readLine();
+						Scanner scanner = new Scanner(line);
+						while(scanner.hasNextInt()) {
+							counter--;
+							idList.add(scanner.nextInt());
+						}
+						scanner.close();
+					}
+					if(EmployeeDAO.deleteEmployee(idList))
+						System.out.println("Employee details Deleted.");
+					else 
+						System.out.println("Error occured in deleting Employees.");
+					break;
+				}
+				case 9: {
+					if(EmployeeDAO.deleteEmployee())
+						System.out.println("All Employee Deleted.");
+					else
+						System.out.println("Error occured in deleting Employee.");
+					break;
+				}
+				case 10: {
+					System.out.println("1. Search by Employee ID.");
+					System.out.println("2. Search by Employee Name.");
+					System.out.println("3. Search by Employee Department.");
+					System.out.println("4. Search by Employee Age.");
+					System.out.println("5. Search by Employee Address.");
+					System.out.print("Enter your choice:");
+					int ch = Integer.parseInt(br.readLine());
+					List<Employee> emList = new ArrayList<Employee>();
+					if(ch == 1) {
+						System.out.print("Enter Employee ID: ");
+						int id = Integer.parseInt(br.readLine());
+						emList = EmployeeDAO.searchEmployee(new Employee(id,null,null,0,null));
+					}
+					else if(ch == 2) {
+						System.out.print("Enter Employee Name: ");
+						//String name = br.readLine();
+						emList = EmployeeDAO.searchEmployee(new Employee(0,"Naveen",null,25,null));
+					} 
+					else if(ch == 3) {
+						System.out.print("Enter Employee Department: ");
+						String department = br.readLine();
+						emList = EmployeeDAO.searchEmployee(new Employee(0,null,department,0,null));
+					}
+					else if(ch == 4) {
+						System.out.print("Enter Employee Age: ");
+						int age  = Integer.parseInt(br.readLine());
+						emList = EmployeeDAO.searchEmployee(new Employee(0,null,null,age,null));
+					}
+					else if(ch == 5) {
+						System.out.print("Enter Employee Address: ");
+						String address = br.readLine();
+						emList = EmployeeDAO.searchEmployee(new Employee(0,null,null,0,address));
+					}
+					System.out.println(emList);
+					break;
+				}
+				case 11: {
+					flag = false;
+					break;
+				}
+				default: {
+					System.out.println("Invalid choice.");
+				}
+				}
+			} while (flag == true);
+		} catch (IOException e) {
+			System.out.println("Exception: " + e.getMessage());
+		}
+	}
+
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>WelcomeTo Employee Management System</title>
+</h:head>
+<h:body bgcolor="gray">
+	<h:form>
+		<p:accordionPanel>
+			<p:tab title="Welcome To Employee Management System">
+				<p:accordionPanel>
+					<p:tab title="Store">
+						<h:panelGrid columns="1" cellpadding="10">
+						<h:commandButton value="Store Employee" outcome="storeEmployee" actionListener="#{employeeBean.reset}" />
+						</h:panelGrid>	
+					</p:tab>
+					
+					<p:tab title="Get">
+						<h:panelGrid columns="1" cellpadding="10">
+						<h:commandButton value="Get Employee" outcome="getEmployee" actionListener="#{employeeBean.reset}"/>
+						<h:commandButton value="Get All Employee" outcome="getAllEmployee" actionListener="#{employeeBean.reset}" />
+						</h:panelGrid>	
+					</p:tab>
+	
+					<p:tab title="Update">
+						<h:panelGrid columns="1" cellpadding="10">
+						<h:commandButton value="Update Employee" outcome="updateEmployee" actionListener="#{employeeBean.reset}" />
+						</h:panelGrid>	
+					</p:tab>
+					
+					<p:tab title="Delete">
+						<h:panelGrid columns="1" cellpadding="10">
+						<h:commandButton value="Delete Employee" outcome="deleteEmployee" actionListener="#{employeeBean.reset}" />
+						</h:panelGrid>	
+					</p:tab>
+					
+					<p:tab title="Search">
+						<h:panelGrid columns="1" cellpadding="10">
+						<h:commandButton value="Search Options" outcome="searchOptions" actionListener="#{employeeBean.reset}" />
+						</h:panelGrid>	
+					</p:tab>
+				</p:accordionPanel>
+			</p:tab>
+		</p:accordionPanel>
+	</h:form>
+</h:body>
+</html>

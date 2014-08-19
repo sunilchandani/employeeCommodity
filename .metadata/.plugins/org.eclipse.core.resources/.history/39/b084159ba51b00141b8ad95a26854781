@@ -1,0 +1,5 @@
+package com.sunil.entities;
+
+public class Commodity {
+
+}

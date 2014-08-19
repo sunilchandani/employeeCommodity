@@ -1,0 +1,155 @@
+package com.sunil.rest;
+
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import com.sunil.DAO.EmployeeDAO;
+import com.sunil.Entities.Employee;
+import com.sunil.common.EmployeeConstants;
+
+@Path(EmployeeConstants.EMPLOYEE_SERVICE_URL)
+public class JSONService {
+	@GET
+	@Path(EmployeeConstants.GET_EMPLOYEE_BY_PARAM_URL)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmployeeInJSON(@PathParam("param") String id) {
+		Integer empId = Integer.parseInt(id);
+		Employee emp = EmployeeDAO.getEmployee(empId);
+		return Response.status(200).entity(emp).build();
+	}
+
+	@GET
+	@Path(EmployeeConstants.GET_ALL_EMOPLOYEE_URL)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmployee() {
+		List<Employee> empList = EmployeeDAO.getEmployee();
+		GenericEntity<List<Employee>> genericEntity = new GenericEntity<List<Employee>>(
+				empList) {};
+		Response response = null;
+		try {
+			response = Response.status(201).entity(genericEntity).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	@POST
+	@Path(EmployeeConstants.STORE_EMPLOYEE_URL)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response postEmployee(Employee employee) {
+		boolean b = EmployeeDAO.storeEmployee(employee);
+		if (b) return Response.status(201).entity("Employee Details added.")
+					.build();
+		else return Response.status(202).entity("Employee Already Exists.")
+				.build();
+	}
+
+	@POST
+	@Path(EmployeeConstants.STORE_MULTIPLE_EMPLOYEE_URL)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response postMultipleEmployee(List<Employee> empList) {
+		boolean b = EmployeeDAO.storeEmployee(empList);
+		if (b)
+			return Response.status(201).entity("Employee Details added.")
+					.build();
+		else
+			return Response
+					.status(202)
+					.entity("Invalid Employee Details/Employee ID already exists.")
+					.build();
+	}
+
+	@POST
+	@Path(EmployeeConstants.UPDATE_EMPLOYEE_URL)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateEmployee(Employee employee) {
+		boolean state;
+		state = EmployeeDAO.updateEmployee(employee);
+		if (state)
+			return Response.status(201)
+					.entity("Updated:\n" + employee.toString()).build();
+		else
+			return Response
+					.status(202)
+					.entity("Error in Updation: No Employee with ID="
+							+ employee.getEmpId() + " exist.").build();
+	}
+
+	@POST
+	@Path(EmployeeConstants.UPDATE_MULTIPLE_EMPLOYEE_URL)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response updateEmployee(List<Employee> empList) {
+		boolean state;
+		state = EmployeeDAO.updateEmployee(empList);
+		if (state)
+			return Response.status(201)
+					.entity("Updated:\n" + empList.toString()).build();
+		else
+			return Response.status(202).entity("Error in Updation").build();
+	}
+
+	@POST
+	@Path()
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response deleteEmployee(@PathParam("param") String id) {
+		boolean status = EmployeeDAO.deleteEmployee(Integer.parseInt(id));
+		if (status)
+			return Response.status(201).entity("Employee details Deleted\n")
+					.build();
+		else
+			return Response.status(202)
+					.entity("No Employee with Employee ID:" + id + "\n")
+					.build();
+	}
+
+	@POST
+	@Path("/deleteAll")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response deleteEmployee() {
+		boolean status = EmployeeDAO.deleteEmployee();
+		if (status)
+			return Response.status(201)
+					.entity("All employee details deleted:\n").build();
+		else
+			return Response.status(202).entity("Error in Deletion.\n").build();
+	}
+	
+	@GET
+	@Path("/search")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchEmployee(@DefaultValue("0") @QueryParam("empId") Integer empId, 
+									@DefaultValue("") @QueryParam("name") String name,
+									@DefaultValue("") @QueryParam("department") String department, 
+									@DefaultValue("0") @QueryParam("age") Integer age, 
+									@DefaultValue("") @QueryParam("address") String address) {
+		Employee emp = new Employee(empId, name, department, age, address);
+		System.out.println(emp);
+		
+		List<Employee> empList = EmployeeDAO.searchEmployee(emp);
+		
+		if(empList != null) {
+			return Response.status(201)
+					.entity(empList).build();
+		}
+		else {
+			return Response.status(200)
+					.entity(empList).build();
+		}
+		
+	}
+
+}

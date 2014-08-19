@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="Shell {Data Binding}/Shell {Report Design - employeeBirtReport/new_report.rptdesign - Eclipse}">
+		<item value="1153" key="DIALOG_WIDTH"/>
+		<item value="82" key="DIALOG_Y_ORIGIN"/>
+		<item value="456" key="DIALOG_HEIGHT"/>
+		<item value="75" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="Shell {Edit Data Source - Data Source}/Shell {Report Design - employeeBirtReport/new_report.rptdesign - Eclipse}">
+		<item value="800" key="DIALOG_WIDTH"/>
+		<item value="640" key="SASHFORM.RIGHT"/>
+		<item value="160" key="SASHFORM.LEFT"/>
+		<item value="53" key="DIALOG_Y_ORIGIN"/>
+		<item value="500" key="DIALOG_HEIGHT"/>
+		<item value="251" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="Shell {Edit Data Set - d}/Shell {Report Design - EmployeeBirtReports/employeeBirtReport.rptdesign - Eclipse}">
+		<item value="800" key="DIALOG_WIDTH"/>
+		<item value="640" key="SASHFORM.RIGHT"/>
+		<item value="160" key="SASHFORM.LEFT"/>
+		<item value="53" key="DIALOG_Y_ORIGIN"/>
+		<item value="500" key="DIALOG_HEIGHT"/>
+		<item value="251" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="Shell {Edit Data Set - Data Set}/Shell {Report Design - employeeBirtReport/new_report.rptdesign - Eclipse}">
+		<item value="800" key="DIALOG_WIDTH"/>
+		<item value="640" key="SASHFORM.RIGHT"/>
+		<item value="160" key="SASHFORM.LEFT"/>
+		<item value="53" key="DIALOG_Y_ORIGIN"/>
+		<item value="500" key="DIALOG_HEIGHT"/>
+		<item value="251" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+	</section>
+</section>

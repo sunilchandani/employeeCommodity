@@ -1,0 +1,14 @@
+package com.sunil.entities;
+
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+
+@PersistenceCapable(table="commodity", detachable="true")
+public class Commodity {
+
+	@Persistent(primaryKey="true", valueStrategy=IdGeneratorStrategy.INCREMENT)
+	private Integer id;
+	
+}
